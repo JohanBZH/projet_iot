@@ -2,7 +2,7 @@
 Collecter, stocker et traiter des données de température et d'humidité
 
 ## Votre projet “open-source” :
-    • Devra être accessible sur git (github ou gitlab)  
+    • Devra être accessible sur git - Github
     • Vous devrez soumettre ce git à votre direction avant votre présentation afin qu’il puisse auditer le travail de votre équipe  
 
 ## Votre application devra :
