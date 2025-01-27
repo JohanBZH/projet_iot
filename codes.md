@@ -123,6 +123,9 @@ void loop() {
   // sur le moniteur serie
   Serial.println("Temperature = " + String(dht.readTemperature())+" °C");
   Serial.println("Humidite = " + String(dht.readHumidity())+" %");
+
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
   // Attend 10 secondes avant de reboucler
   delay(10000);
 
@@ -130,9 +133,9 @@ void loop() {
   // (note: line 1 is the second row, since counting begins with 0):
   lcd.setCursor(0, 0);
   // print the number of seconds since reset:
-  lcd.print("Temperature = " + String(dht.readTemperature())+" °C");
+  lcd.print("Temp = " + String(temperature)+" C");
   lcd.setCursor(0, 1);
   // print the number of seconds since reset:
-  lcd.print("Humidite = " + String(dht.readHumidity())+" %");
+  lcd.print("Humi = " + String(humidity)+" %");
 
 }
