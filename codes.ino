@@ -37,12 +37,12 @@ See : https://docs.arduino.cc/learn/electronics/lcd-displays/
 
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
-DHT dht(10, 22);
+DHT dht(DHTPIN, DHTTYPE);
 
 void setup() {
   Serial.begin(9600);
   
-  // Initialise la capteur DHT22
+  // Initialize DHT22 sensor
   dht.begin();
 
   // set up the LCD's number of columns and rows:
@@ -56,17 +56,16 @@ void setup() {
 
 void loop() {
 
-  // Recupere la temperature et l'humidite du capteur et l'affiche
-  // sur le moniteur serie
+  // Print temperature and humidity on the computer screen to check
   Serial.println("Temperature = " + String(dht.readTemperature())+" °C");
   Serial.println("Humidite = " + String(dht.readHumidity())+" %");
 
   float temperature = dht.readTemperature();
   float humidity = dht.readHumidity();
-  // Attend 10 secondes avant de reboucler
-  delay(10000);
+  // Wait 2.5 seconds to refresh
+  delay(2500);
 
-  // set the cursor to column 0, line 1
+  // Set the cursor to start writing on the LCD screen in column 0, line 0
   // (note: line 1 is the second row, since counting begins with 0):
   lcd.setCursor(0, 0);
   // print the number of seconds since reset:
@@ -74,5 +73,4 @@ void loop() {
   lcd.setCursor(0, 1);
   // print the number of seconds since reset:
   lcd.print("Humi = " + String(humidity)+" %");
-
 }
