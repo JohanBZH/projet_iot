@@ -27,3 +27,12 @@ Collecter, stocker et traiter des données de température et d'humidité
 
 ## Date d’évaluation 
     • 25/03/2025 (prévisionnel)  
+
+
+Database - MariaDB
+
+Container name : project_iot_server
+Port : localhost:3308
+
+docker run -d --name project_iot_server     -p 0.0.0.0:3308:3306/tcp     -e MARIADB_ROOT_PASSWORD=toor     mariadb:latest
+
