@@ -29,10 +29,39 @@ Collecter, stocker et traiter des données de température et d'humidité
     • 25/03/2025 (prévisionnel)  
 
 
-Database - MariaDB
+# Database - MariaDB
 
 Container name : project_iot_server
 Port : localhost:3308
 
-docker run -d --name project_iot_server     -p 0.0.0.0:3308:3306/tcp     -e MARIADB_ROOT_PASSWORD=toor     mariadb:latest
+Database name : project_iot_database
 
+## Set up
+
+Create the docker
+    docker run -d --name project_iot_server     
+    -p 0.0.0.0:3308:3306/tcp     
+    -e MARIADB_ROOT_PASSWORD=toor     
+    mariadb:latest  
+Access the container
+    docker exec -it project_iot_server bash  
+Access to mariadb
+    mariadb -u root -p  
+Create database
+    create database project_iot_database;  
+Control
+    show databases;  
+
+## User
+Create your first user  
+login : admin  
+pass : toor  
+
+## Connexion to beekeeper
+Host : localhost  
+Port : 3308  
+User : root  
+Pass : toor  
+
+
+For more info : https://mariadb.com/kb/en/installing-and-using-mariadb-via-docker/
