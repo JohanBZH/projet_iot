@@ -36,7 +36,7 @@ Port : localhost:3308
 
 Database name : project_iot_database
 
-## Set up
+## Set up from scratch
 
 Create the docker
     docker run -d --name project_iot_server     
@@ -65,3 +65,9 @@ Pass : toor
 
 
 For more info : https://mariadb.com/kb/en/installing-and-using-mariadb-via-docker/
+
+## Set up from our image
+
+docker pull jmons29/mariadb:latest
+
+docker run --hostname=c6633cfa15b8 --env=MARIADB_ROOT_PASSWORD=toor --env=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin --env=GOSU_VERSION=1.17 --env=LANG=C.UTF-8 --env=MARIADB_VERSION=1:11.6.2+maria~ubu2404 --volume=/var/lib/mysql --network=bridge -p 3308:3306 --restart=no --label='org.opencontainers.image.authors=MariaDB Community' --label='org.opencontainers.image.base.name=docker.io/library/ubuntu:noble' --label='org.opencontainers.image.description=MariaDB Database for relational SQL' --label='org.opencontainers.image.documentation=https://hub.docker.com/_/mariadb/' --label='org.opencontainers.image.licenses=GPL-2.0' --label='org.opencontainers.image.ref.name=ubuntu' --label='org.opencontainers.image.source=https://github.com/MariaDB/mariadb-docker' --label='org.opencontainers.image.title=MariaDB Database' --label='org.opencontainers.image.url=https://github.com/MariaDB/mariadb-docker' --label='org.opencontainers.image.vendor=MariaDB Community' --label='org.opencontainers.image.version=11.6.2' --runtime=runc -d mariadb:latest
