@@ -4,7 +4,7 @@ services:
     volumes:
       - "./:/var/www/html" #sync project dir with the container web dir. ./ means "file you are currently in"
     ports:
-      - '80:80'     # apache
+      - '8002:80'     # apache
       - '443:443'   # for future ssl traffic
     depends_on:
       - db
@@ -18,7 +18,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_ALLOW_EMPTY_PASSWORD=${MYSQL_ALLOW_EMPTY_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - CHARSET=${CHARSET}
     volumes:
       - './db:/docker-entrypoint-initdb.d' #sync persistent sql files with container
@@ -33,3 +33,5 @@ services:
       - PMA_PORT=3306
     env_file:
       - .env  # link the env file 
+    depends_on:
+      - db

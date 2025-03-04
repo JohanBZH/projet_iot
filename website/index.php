@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Project iot</title>
 </head>
 <body>
-    <?php
+    <p>Accès granted</p>
+    <!-- <?php
         //DSN de connexion
-        $dsn = "mysql:dbname=".$_ENV['MYSQL_DATABASE'].";host=db";
+        $dsn = "mysql:dbname=".$_ENV['MYSQL_DATABASE'].";"host="".$_ENV['MYSQL_HOST'].";
 
         //Connexion a la base
         try{
@@ -32,7 +33,7 @@
         //Dès ici on est connecté et on peut faire des requêtes.
 
         //préparation de la requête
-        $sql = "SELECT * FROM php_docker_table WHERE id = 3";
+        $sql = "SELECT * FROM iot_table";
         //execution de la requête
         $requete = $db->query($sql);
 
@@ -44,15 +45,15 @@
         echo "</pre>";
 
         //Ajouter des data avec une requête préparée
-        $sql = "INSERT INTO php_docker_table (`title`, `body`, `date_created`) 
-        VALUES (:title, :body, :date_created)";
+        $sql = "INSERT INTO app_user (`login`, `password`)
+        VALUES (:login, :password)";
         $stmt = $db->prepare($sql);
         $stmt->execute([
-            ':title' => 'Third post',
-            ':body' => 'This was inserted through php',
-            ':date_created' => '2025-02-08'
+            ':login' => 'First user',
+            ':password' => '1234'
         ]);
 
-    ?>    
+    ?>     -->
+    
 </body>
 </html>

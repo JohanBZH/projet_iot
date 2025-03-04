@@ -1,0 +1,41 @@
+[
+{
+    "type": "header",
+    "version": "5.2.2",
+    "comment": "Export to JSON plugin for PHPMyAdmin"
+},
+{
+    "type": "database",
+    "name": "iot"
+},
+{
+    "type": "table",
+    "name": "App_user",
+    "database": "iot",
+    "data": 
+[
+
+]
+
+}
+,{
+    "type": "table",
+    "name": "Consult",
+    "database": "iot",
+    "data": 
+[
+
+]
+
+}
+,{
+    "type": "table",
+    "name": "Data",
+    "database": "iot",
+    "data": 
+[
+
+]
+
+}
+]

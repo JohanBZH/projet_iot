@@ -29,7 +29,7 @@ Collecter, stocker et traiter des données de température et d'humidité
     • 25/03/2025 (prévisionnel)  
 
 
-# Database - MariaDB
+<!-- # Database - MariaDB
 
 Container name : project_iot_server
 Port : localhost:3308
@@ -39,14 +39,11 @@ Database name : project_iot_database
 ## Set up from scratch
 
 Create the docker
-    docker run -d --name project_iot_server     
-    -p 0.0.0.0:3308:3306/tcp     
-    -e MARIADB_ROOT_PASSWORD=toor     
-    mariadb:latest  
+    docker run --name project_iot_server -e MYSQL_ROOT_PASSWORD=mypass -p 3306:3306 -d docker.io/library/mariadb:10.3
 Access the container
     docker exec -it project_iot_server bash  
 Access to mariadb
-    mariadb -u root -p  
+    mysql -u root -p  
 Create database
     create database project_iot_database;  
 Control
@@ -54,8 +51,8 @@ Control
 
 ## User
 Create your first user  
-login : admin  
-pass : toor  
+login : iot  
+pass : iot  
 
 ## Connexion to beekeeper
 Host : localhost  
@@ -64,7 +61,7 @@ User : root
 Pass : toor
 
 
-For more info : https://mariadb.com/kb/en/installing-and-using-mariadb-via-docker/
+For more info : https://mariadb.com/kb/en/installing-and-using-mariadb-via-docker/ -->
 
 # 2nd way fullstack web
 
@@ -84,10 +81,19 @@ For more info : https://mariadb.com/kb/en/installing-and-using-mariadb-via-docke
 ```
 docker compose up --build
 ```   
-Then  
+For any other time just run 
 ```
 docker compose up
 ```   
+
+To remove the docker
+```
+docker compose down
+```   
+
 3. Access your site through the browser :
 - site : localhost
 - phpmyadmin : localhost/8001
+
+4. Access the container
+- docker exec -it <container ID> bash  
