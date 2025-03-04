@@ -28,16 +28,12 @@
 
         $db = new PDO($dsn, $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $options);
 
-        $deb=0;
-
-        insertUser('NAME','PASSSS',$db);
-
-        $deb=2;
+        //insertUser(<'login'>,<'password'>,$db);
+        //insertData(<'time_val'>, <'temperature_val'>, <'humidity_val'>, $db);
 
         echo "Connexion réussie !<br>";
 
     } catch(PDOException $e) {
-        echo $deb;
         error_log("Database error: " . $e->getMessage());
         die("Une erreur s'est produite.");
     }
