@@ -6,15 +6,17 @@
     <title>Project iot</title>
 </head>
 <body>
-    <p>HTML du php ok</p>
 
     <?php
-    require_once 'vendor/autoload.php';
+
+
+    include 'vendor/autoload.php';
 
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
     $dotenv->load();
 
     try {
+
         $dsn = "mysql:host={$_ENV['MYSQL_HOST']};dbname={$_ENV['MYSQL_DATABASE']};charset=utf8mb4";
         
         $options = [
@@ -25,17 +27,14 @@
 
         $db = new PDO($dsn, $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $options);
 
-        // // Exemple de requête préparée sécurisée
-        // $stmt = $db->prepare("SELECT * FROM iot_table WHERE id = :id");
-        // $stmt->execute(['id' => 1]);
-        // $result = $stmt->fetch();
-
-        // // Exemple d'insertion sécurisée
-        // $insertStmt = $db->prepare("INSERT INTO app_user (login, password) VALUES (:login, :password)");
-        // $insertStmt->execute([
-        //     ':login' => 'newuser',
-        //     ':password' => password_hash('securepassword', PASSWORD_DEFAULT)
-        // ]);
+ 
+        $insertStmt = $db->prepare("INSERT INTO App_user (Login, Password) VALUES (:llogin, :ppassword)");
+        $login = "User_test1";
+        $pass = "password_test1";
+        
+        $insertStmt->bindParam('llogin',$login);
+        $insertStmt->bindParam('ppassword',$pass);
+        $insertStmt->execute();
 
         echo "Connexion réussie !<br>";
 
