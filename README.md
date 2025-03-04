@@ -28,35 +28,29 @@ Collecter, stocker et traiter des données de température et d'humidité
 ## Date d’évaluation 
     • 25/03/2025 (prévisionnel)  
 
+------------------------------------------------------------------------------------------------------------------
 
-# Database - MariaDB / php-mysql / vlucas/phpdotenv via Composer pour le .env / initialiser composer
+# Database
+## Dependencies
+### MariaDB
+- Set up MariaDB following [step 2](https://github.com/JohanBZH/Hebergement_web_php) :
+- create the database and a user with full privileges
+    Use <'iot'> for all the names
 
-Database name : iot
+- Import the tables :
+```sudo mariadb <iot> < <iot_db.sql>```
 
-## Set up from scratch
+### To connect via PDO
+Install php-mysql
+```sudo aptitude install php-mysql```
 
-<!-- Create the docker
-    docker run --name project_iot_server -e MYSQL_ROOT_PASSWORD=mypass -p 3306:3306 -d docker.io/library/mariadb:10.3
-Access the container
-    docker exec -it project_iot_server bash   -->
-Access to mariadb
-    mysql -u root -p  
-Create database
-    create database project_iot_database;  
-Control
-    show databases;  
+Install and set up composer to install vlucas/phpdotenv to be able to use a .env
+```sudo aptitude install composer```
 
-## User
-Create your first user  
-login : iot  
-pass : iot  
-
-## Connexion to beekeeper
-Host : localhost  
-Port : 3308  
-User : iot  
-Pass : iot
-
-##Create DB
-
-Importer iot_db.sql
+    Initialize composer
+    Place yourself in your index.php repository
+    ```
+    composer init -n
+    composer require vlucas/phpdotenv
+    composer install
+    ```
