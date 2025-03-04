@@ -29,7 +29,7 @@ Collecter, stocker et traiter des données de température et d'humidité
     • 25/03/2025 (prévisionnel)  
 
 
-# Database - MariaDB / php-mysql
+# Database - MariaDB / php-mysql / vlucas/phpdotenv via Composer pour le .env / initialiser composer
 
 Database name : iot
 
