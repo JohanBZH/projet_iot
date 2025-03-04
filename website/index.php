@@ -9,6 +9,7 @@
 
     <?php
 
+    include 'functions.php';
 
     include 'vendor/autoload.php';
 
@@ -27,18 +28,16 @@
 
         $db = new PDO($dsn, $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $options);
 
- 
-        $insertStmt = $db->prepare("INSERT INTO App_user (Login, Password) VALUES (:llogin, :ppassword)");
-        $login = "User_test1";
-        $pass = "password_test1";
-        
-        $insertStmt->bindParam('llogin',$login);
-        $insertStmt->bindParam('ppassword',$pass);
-        $insertStmt->execute();
+        $deb=0;
+
+        insertUser('NAME','PASSSS',$db);
+
+        $deb=2;
 
         echo "Connexion réussie !<br>";
 
     } catch(PDOException $e) {
+        echo $deb;
         error_log("Database error: " . $e->getMessage());
         die("Une erreur s'est produite.");
     }
@@ -46,3 +45,5 @@
     
 </body>
 </html>
+
+<!-- <'login'> , <'password'> -->
