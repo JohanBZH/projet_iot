@@ -106,3 +106,21 @@ For this project we used:
 - WiFi.h --> to connect the LoRa32 to the wifi
 - LiquidCrystal.h --> for the LCD screen 
 
+
+# Alwaysdata
+
+Connexion au site:
+
+login: yoann.meynsan@viacesi.fr
+
+password: jomayo29200
+
+connexion ftp:
+
+login: jomayo
+
+password: Jomayo29200BREST
+
+hôte: ftp-jomayo.alwaysdata.net
+
+url du site: https://jomayo.alwaysdata.net/Frontend/
