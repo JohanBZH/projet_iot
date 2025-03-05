@@ -58,8 +58,6 @@ void loop() {
     return;
   }
 
-  float temperatureRessentieEnCelsius = dht.computeHeatIndex(temperatureEnCelsius, tauxHumidite, false);
-
   Serial.print("Humidité = ");
   Serial.print(tauxHumidite);
   Serial.println(" %");
@@ -67,15 +65,16 @@ void loop() {
   Serial.print(temperatureEnCelsius);
   Serial.println(" °C");
   Serial.print("Température ressentie = ");
-  Serial.print(temperatureRessentieEnCelsius);
   Serial.println(" °C");
   Serial.println();
 
   unsigned long currentMillis = millis();
 
   HTTPClient http;
+  temperatureEnCelsius = temperatureEnCelsius*100;
+  tauxHumidite = tauxHumidite*100;
+  String url = site + "?temperature=" + String(temperatureEnCelsius) + "&humidity=" + String(tauxHumidite);
 
-  String url = site + "?temperature=" + String(temperatureRessentieEnCelsius) + "&humidity=" + String(tauxHumidite);
 
   http.begin(url);
   int httpResponseCode = http.GET();
@@ -111,6 +110,9 @@ void loop() {
       hours++;
     }
   }
+
+  temperatureEnCelsius = temperatureEnCelsius/100;
+  tauxHumidite = tauxHumidite/100;
 
   lcd.setCursor(0, 0);
   lcd.print("Temp: " + String(temperatureEnCelsius) + "C");
