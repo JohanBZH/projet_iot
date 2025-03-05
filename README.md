@@ -85,9 +85,16 @@ The Liquid crystal LCD is a screen that can display informations from the ESP32.
 
 To connect the ESP to the Arduino IDE we had to use a specific board, the **LoRa32 Wifi v3** and select the right **port COM**.
 
-To use this board you have to install the **Heltec ESP32 Series Dev-boards** on the Arduino IDE.
+To use this board you have to install the **Heltec ESP32 Series Dev-boards** on the Arduino IDE, follow this few steps to add it to the Arduino IDE:
 
-To get the right port com you have to the **device manager** and check the line **Ports (COM and LPT)**. This line won't appear if the LoRa isn't connect to your computer.
+- In File -> Preferences -> Additional boards manager URLs, add this url: http://arduino.esp8266.com/stable/package_esp8266com_index.json
+
+- Go to the Boards Manager, type ESP32, click install for the Heltec ESP32 Series Dev-Boards.
+
+- After that you just have to select the LoRa32 Wifi V3 model in:
+    Tools -> Board :"" -> Heltec ESP32 Series Dev-boards
+
+To get the right port com you have to the **windows device manager** and check the line **Ports (COM and LPT)**. This line won't appear if the LoRa isn't connect to your computer.
 
 Now, in the Arduino IDE you can select the right board and the right COM.
 
