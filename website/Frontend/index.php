@@ -33,37 +33,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td data-label="rowTime">14h</td>
-                                <td data-label="rowTemp">15</td>
-                                <td data-label="rowXPTemp">13</td>
-                                <td data-label="rowHumidity">24</td>
-                            </tr>
-                            <tr>
-                                <td data-label="rowTime">14h</td>
-                                <td data-label="rowTemp">15</td>
-                                <td data-label="rowXPTemp">13</td>
-                                <td data-label="rowHumidity">24</td>
-                            </tr>
-                            <tr>
-                                <td data-label="rowTime">14h</td>
-                                <td data-label="rowTemp">15</td>
-                                <td data-label="rowXPTemp">13</td>
-                                <td data-label="rowHumidity">24</td>
-                            </tr>
-                            <tr>
-                                <td data-label="rowTime">14h</td>
-                                <td data-label="rowTemp">15</td>
-                                <td data-label="rowXPTemp">13</td>
-                                <td data-label="rowHumidity">24</td>
-                            </tr>
-                            <tr>
-                                <td data-label="rowTime">14h</td>
-                                <td data-label="rowTemp">15</td>
-                                <td data-label="rowXPTemp">13</td>
-                                <td data-label="rowHumidity">24</td>
-                            </tr>
-                            </tbody>
+                        <?php
+                            if (!empty($data)) {
+                                foreach ($data as $row) {
+                                    echo "<tr>
+                                        <td data-label='rowTime'>{$row['Time_stamp']}</td>
+                                        <td data-label='rowTemp'>{$row['Temperature_value']}</td>
+                                        <td data-label='rowXPTemp'>{$row['ExperiencedTemperature_value']}</td>
+                                        <td data-label='rowHumidity'>{$row['Humidity_value']}</td>
+                                    </tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='4'>Aucune donnée disponible</td></tr>";
+                            }
+                            ?>
+                        </tbody>
                     </table>
                 </div>
                 <div class="graph">
@@ -88,19 +72,22 @@
     $dotenv->load();
 
     $deb=0;
+    
+    $temperature = isset($_GET['temperature']) ? $_GET['temperature'] : null;
+    $humidity = isset($_GET['humidity']) ? $_GET['humidity'] : null;
+    $time_stamp = date('Y-m-d H:i:s');
 
     try {
 
         $dsn = "mysql:host={$_ENV['MYSQL_HOST']};dbname={$_ENV['MYSQL_DATABASE']};charset=utf8mb4";
         
-$deb=1;
 
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES => false,
         ];
-$deb=2;
+
         $db = new PDO($dsn, $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $options);
 
         //insertUser(<'login'>,<'password'>,$db);
@@ -108,11 +95,19 @@ $deb=2;
 
         echo "Connexion réussie !<br>";
 
+        $stmt = $db->prepare("INSERT INTO data (Temperature_value, Humidity_value, Time_stamp) VALUES (:temperature, :humidity, :time_stamp)");
+        $stmt->bindParam(':temperature', $temperature);
+        $stmt->bindParam(':humidity', $humidity);
+        $stmt->bindParam(':time_stamp', $time_stamp);
+        $stmt->execute();
+        echo "Données insérées avec succès !<br>";
+
+        $query = "SELECT Time_stamp, Temperature_value, ExperiencedTemperature_value, Humidity_value FROM data ORDER BY Time_stamp DESC LIMIT 10";
+        $result = $db->query($query);
+        $data = $result->fetchAll(); // Récupère les données sous forme de tableau associatif
+
     } catch(PDOException $e) {
         error_log("Database error: " . $e->getMessage());
-
-        echo $deb;
-        die("Une erreur s'est produite.");
     }
     ?>
     <script src="script.js"></script>
