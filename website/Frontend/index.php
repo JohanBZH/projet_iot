@@ -6,12 +6,12 @@
     <title>Project iot</title>
 </head>
 <body>
-
+    <h1>Yohan sont bg</h1>
     <?php
 
-    include 'functions.php';
+    include '../Backend/functions.php';
 
-    include 'vendor/autoload.php';
+    include '../Backend/vendor/autoload.php';
 
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
     $dotenv->load();
