@@ -77,8 +77,8 @@ DROP TABLE IF EXISTS `Data`;
 CREATE TABLE `Data` (
   `id_data` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
   `Time_stamp` datetime NOT NULL COMMENT 'Time stamp',
-  `Temperature_value` tinyint(4) DEFAULT NULL,
-  `Humidity_value` tinyint(4) DEFAULT NULL,
+  `Temperature_value`  FLOAT DEFAULT NULL,
+  `Humidity_value`  FLOAT DEFAULT NULL,
   PRIMARY KEY (`id_data`),
   UNIQUE KEY `Time_stamp` (`Time_stamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
