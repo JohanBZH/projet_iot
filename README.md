@@ -87,7 +87,7 @@ To connect the ESP to the Arduino IDE we had to use a specific board, the **LoRa
 
 To use this board you have to install the **Heltec ESP32 Series Dev-boards** on the Arduino IDE, follow this few steps to add it to the Arduino IDE:
 
-- In File -> Preferences -> Additional boards manager URLs, add this url: http://arduino.esp8266.com/stable/package_esp8266com_index.json
+- In File -> Preferences -> Additional boards manager URLs, add this url: https://resource.heltec.cn/download/package_heltec_esp32_index.json
 
 - Go to the Boards Manager, type ESP32, click install for the Heltec ESP32 Series Dev-Boards.
 
