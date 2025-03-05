@@ -20,25 +20,20 @@ try {
     ];
 
     $db = new PDO($dsn, $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $options);
-    echo "Connexion réussie !<br>";
 
     if ($temperature !== null && $humidity !== null && is_numeric($temperature) && is_numeric($humidity)) {
         $floatTemperature = (float)$temperature;
         $floatHumidity = (float)$humidity;
-        echo "Température: " . $floatTemperature . " °C<br>";
-        echo "Humidité: " . $floatHumidity . " %<br>";
+
         $floatTemperature = $floatTemperature/100;
         $floatHumidity = $floatHumidity/100;
-        echo "Température: " . $floatTemperature . " °C<br>";
-        echo "Humidité: " . $floatHumidity . " %<br>";
+
         $stmt = $db->prepare("INSERT INTO Data (Temperature_value, Humidity_value, Time_stamp) VALUES (:temperature, :humidity, :time_stamp)");
         $stmt->bindParam(':temperature', $floatTemperature);
         $stmt->bindParam(':humidity', $floatHumidity);
         $stmt->bindParam(':time_stamp', $time_stamp);
         $stmt->execute();
-        echo "Données insérées avec succès !<br>";
-    } else {
-        echo "Données manquantes ou invalides, insertion annulée.<br>";
+
     }
 
 } catch(PDOException $e) {
