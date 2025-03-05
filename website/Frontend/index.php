@@ -1,3 +1,47 @@
+<?php
+
+include '../Backend/functions.php';
+
+include '../Backend/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable('/home/jomayo/www/Frontend'); //
+$dotenv->load();
+
+$deb=0;
+
+$temperature = isset($_GET['temperature']) ? $_GET['temperature'] : null;
+$humidity = isset($_GET['humidity']) ? $_GET['humidity'] : null;
+$time_stamp = date('Y-m-d H:i:s');
+
+try {
+
+    $dsn = "mysql:host={$_ENV['MYSQL_HOST']};dbname={$_ENV['MYSQL_DATABASE']};charset=utf8mb4";
+    
+
+    $options = [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES => false,
+    ];
+
+    $db = new PDO($dsn, $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $options);
+
+    //insertUser(<'login'>,<'password'>,$db);
+    //insertData(<'time_val'>, <'temperature_val'>, <'humidity_val'>, $db);
+
+    echo "Connexion réussie !<br>";
+
+    $stmt = $db->prepare("INSERT INTO Data (Temperature_value, Humidity_value, Time_stamp) VALUES (:temperature, :humidity, :time_stamp)");
+    $stmt->bindParam(':temperature', $temperature);
+    $stmt->bindParam(':humidity', $humidity);
+    $stmt->bindParam(':time_stamp', $time_stamp);
+    $stmt->execute();
+    echo "Données insérées avec succès !<br>";
+
+} catch(PDOException $e) {
+    error_log("Database error: " . $e->getMessage());
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,18 +72,20 @@
                             <tr>
                                 <th class="headerTime">Heure</th>
                                 <th class="headerTemp">Température</th>
-                                <th class="headerXPTemp">Température <br>ressentie</th>
                                 <th class="headerHumidity">Humidité</th>
                             </tr>
                         </thead>
                         <tbody>
                         <?php
+                            $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp DESC LIMIT 10";
+                            $result = $db->query($query);
+                            $data = $result->fetchAll(); // Récupère les données sous forme de tableau associatif
+
                             if (!empty($data)) {
                                 foreach ($data as $row) {
                                     echo "<tr>
                                         <td data-label='rowTime'>{$row['Time_stamp']}</td>
                                         <td data-label='rowTemp'>{$row['Temperature_value']}</td>
-                                        <td data-label='rowXPTemp'>{$row['ExperiencedTemperature_value']}</td>
                                         <td data-label='rowHumidity'>{$row['Humidity_value']}</td>
                                     </tr>";
                                 }
@@ -62,56 +108,6 @@
         <a href="https://github.com/yoannmey/">Yoann Meynsan</a>
     </footer>
 
-    <?php
-
-    include '../Backend/functions.php';
-
-    include '../Backend/vendor/autoload.php';
-
-    $dotenv = Dotenv\Dotenv::createImmutable('/home/jomayo/www/Frontend'); //
-    $dotenv->load();
-
-    $deb=0;
-    
-    $temperature = isset($_GET['temperature']) ? $_GET['temperature'] : null;
-    $humidity = isset($_GET['humidity']) ? $_GET['humidity'] : null;
-    $time_stamp = date('Y-m-d H:i:s');
-
-    try {
-
-        $dsn = "mysql:host={$_ENV['MYSQL_HOST']};dbname={$_ENV['MYSQL_DATABASE']};charset=utf8mb4";
-        
-
-        $options = [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ];
-
-        $db = new PDO($dsn, $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $options);
-
-        //insertUser(<'login'>,<'password'>,$db);
-        //insertData(<'time_val'>, <'temperature_val'>, <'humidity_val'>, $db);
-
-        echo "Connexion réussie !<br>";
-
-        $stmt = $db->prepare("INSERT INTO data (Temperature_value, Humidity_value, Time_stamp) VALUES (:temperature, :humidity, :time_stamp)");
-        $stmt->bindParam(':temperature', $temperature);
-        $stmt->bindParam(':humidity', $humidity);
-        $stmt->bindParam(':time_stamp', $time_stamp);
-        $stmt->execute();
-        echo "Données insérées avec succès !<br>";
-
-        $query = "SELECT Time_stamp, Temperature_value, ExperiencedTemperature_value, Humidity_value FROM data ORDER BY Time_stamp DESC LIMIT 10";
-        $result = $db->query($query);
-        $data = $result->fetchAll(); // Récupère les données sous forme de tableau associatif
-
-    } catch(PDOException $e) {
-        error_log("Database error: " . $e->getMessage());
-    }
-    ?>
     <script src="script.js"></script>
 </body>
 </html>
-
-<!-- <'login'> , <'password'> -->
