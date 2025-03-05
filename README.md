@@ -32,7 +32,7 @@ Collecter, stocker et traiter des données de température et d'humidité
 
 # Database
 ## Dependencies
-### MariaDB
+### MariaDB for localhosting
 - Set up MariaDB following [step 2](https://github.com/JohanBZH/Hebergement_web_php) :
 - create the database and a user with full privileges
     Use <'iot'> for all the names
@@ -109,13 +109,13 @@ For this project we used:
 
 # Alwaysdata
 
-Connexion au site:
+### Connexion au site:
 
 login: yoann.meynsan@viacesi.fr
 
 password: jomayo29200
 
-connexion ftp:
+### Connexion ftp:
 
 login: jomayo
 
@@ -124,3 +124,9 @@ password: Jomayo29200BREST
 hôte: ftp-jomayo.alwaysdata.net
 
 url du site: https://jomayo.alwaysdata.net/Frontend/
+
+### Connexion phpMyAdmin
+
+login: jomayo
+
+password: Jomayo29200BREST
