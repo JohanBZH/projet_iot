@@ -1,4 +1,3 @@
-
 // function weatherForecast() {
 //     snowyemoji.classList.add("hidden");
 //     rainyemoji.classList.add("hidden");
