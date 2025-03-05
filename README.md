@@ -54,3 +54,48 @@ Install and set up composer to install vlucas/phpdotenv to be able to use a .env
     composer require vlucas/phpdotenv
     composer install
     ```
+
+# Hardware and Software 
+
+For this project, we had to get the temperature and the percent of humidty in the classroom. So, to catch those datas we used some hardware devices: 
+
+- Lora32 Wifi V3
+- DHT22
+- Liquid crystal LCD 16,2
+
+We also use the Arduino IDE for programming and send the code to the hardware part.
+
+## The hardware
+
+### LoRa32 Wifi V3
+
+The LoRa32 is a wireless communication module. It's based on the ESP32.
+
+### DHT22 
+
+The DHT22 is a temperature and humity sensor that can be connected to an Arduino or an ESP32.
+
+### Liquid crystal LCD 16,2
+
+The Liquid crystal LCD is a screen that can display informations from the ESP32.
+
+## The software
+
+### Boards and libs
+
+To connect the ESP to the Arduino IDE we had to use a specific board, the **LoRa32 Wifi v3** and select the right **port COM**.
+
+To use this board you have to install the **Heltec ESP32 Series Dev-boards** on the Arduino IDE.
+
+To get the right port com you have to the **device manager** and check the line **Ports (COM and LPT)**. This line won't appear if the LoRa isn't connect to your computer.
+
+Now, in the Arduino IDE you can select the right board and the right COM.
+
+For programming the different devices who's connected to the LoRa you have to use some libs. 
+
+For this project we used:
+
+- DHT.h --> for the DHT22 sensor
+- WiFi.h --> to connect the LoRa32 to the wifi
+- LiquidCrystal.h --> for the LCD screen 
+
