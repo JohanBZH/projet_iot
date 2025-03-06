@@ -31,33 +31,56 @@ function insertData($time_val, $temperature_val, $humidity_val, $db){
 function calculateSlidingAverage($data, &$averageTable) {
     $averageSize=5;
     $dataLength = count($data);
+
     // Check for data availability
     if ($dataLength >= $averageSize) {
-        // Get the last five datas
-        $lastFiveData = array_slice($data, -$averageSize);
         
-for($i=0;$i<=$dataLength)
+    for($i = 0; $i <= ($dataLength-$averageSize); $i++){
+
+        // Get the last five datas
+        $lastFiveData = array_slice($data, $i, $averageSize);
 
         // Calculer les moyennes
         $temperatureColumn = array_column($lastFiveData, 'Temperature_value');
         $temperatureAverage = round(array_sum($temperatureColumn) / $averageSize, 2);
-        
+
         $humidityColumn = array_column($lastFiveData, 'Humidity_value');
         $humidityAverage = round(array_sum($humidityColumn) / $averageSize, 2);
-        
+
         // Récupérer le timestamp de la dernière mesure
-        $lastTimestamp = $data[0]['Time_stamp'];
-        
+        $lastTimestamp = $lastFiveData[0]['Time_stamp'];
+
         // Ajouter les données dans le tableau passé par référence
         $averageTable[] = [
             'time' => $lastTimestamp,
             'temperature' => $temperatureAverage,
             'humidite' => $humidityAverage
         ];
-        
-        
-        return true;
-    }
+        }    
+
+        // Print table
+        if (!empty($averageTable)) {
+            echo "<table border='1'>
+                    <tr>
+                        <th>Time</th>
+                        <th>Temperature (°C)</th>
+                        <th>Humidité (%)</th>
+                    </tr>";
+            
+            foreach ($averageTable as $entry) {
+                echo "<tr>
+                        <td>{$entry['time']}</td>
+                        <td>{$entry['temperature']}</td>
+                        <td>{$entry['humidite']}</td>
+                    </tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "Aucune donnée disponible.";
+        }
+            
+            return true;
+        }
     
     return false;
 }
