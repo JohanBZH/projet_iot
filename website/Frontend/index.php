@@ -69,30 +69,39 @@ try {
                 <h2>Affichage live / graphs sur les 10 dernières min</h2>
                 <div class="horizontal" id="recentTable">
                     <table>
-                        <thead>
-                            <tr>
-                                <th class="headerTime">Heure</th>
-                                <th class="headerTemp">Température</th>
-                                <th class="headerHumidity">Humidité</th>
-                            </tr>
-                        </thead>
                         <tbody>
                         <?php
+                            //Save the data averages
+                            $averageTable = [];
+
                             $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp DESC LIMIT 10";
                             $result = $db->query($query);
                             $data = $result->fetchAll(); // Récupère les données sous forme de tableau associatif
 
-                            if (!empty($data)) {
-                                foreach ($data as $row) {
+                            calculateSlidingAverage($data, $averageTable);
+
+                            // Print table
+                            if (!empty($averageTable)) {
+                                echo "<table border='1'>
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Temperature (°C)</th>
+                                            <th>Humidité (%)</th>
+                                        </tr>";
+                                
+                                foreach ($averageTable as $entry) {
                                     echo "<tr>
-                                        <td data-label='rowTime'>{$row['Time_stamp']}</td>
-                                        <td data-label='rowTemp'>{$row['Temperature_value']}</td>
-                                        <td data-label='rowHumidity'>{$row['Humidity_value']}</td>
-                                    </tr>";
+                                            <td>{$entry['time']}</td>
+                                            <td>{$entry['temperature']}</td>
+                                            <td>{$entry['humidite']}</td>
+                                        </tr>";
                                 }
+                                
+                                echo "</table>";
                             } else {
-                                echo "<tr><td colspan='4'>Aucune donnée disponible</td></tr>";
+                                echo "Aucune donnée disponible.";
                             }
+
                             ?>
                         </tbody>
                     </table>
