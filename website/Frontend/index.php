@@ -33,7 +33,6 @@ try {
         $stmt->bindParam(':humidity', $floatHumidity);
         $stmt->bindParam(':time_stamp', $time_stamp);
         $stmt->execute();
-
     }
 
 } catch(PDOException $e) {
@@ -74,34 +73,12 @@ try {
                             //Save the data averages
                             $averageTable = [];
 
-                            $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp DESC LIMIT 10";
+                            $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp DESC";
                             $result = $db->query($query);
                             $data = $result->fetchAll(); // Récupère les données sous forme de tableau associatif
 
                             calculateSlidingAverage($data, $averageTable);
-
-                            // Print table
-                            if (!empty($averageTable)) {
-                                echo "<table border='1'>
-                                        <tr>
-                                            <th>Time</th>
-                                            <th>Temperature (°C)</th>
-                                            <th>Humidité (%)</th>
-                                        </tr>";
-                                
-                                foreach ($averageTable as $entry) {
-                                    echo "<tr>
-                                            <td>{$entry['time']}</td>
-                                            <td>{$entry['temperature']}</td>
-                                            <td>{$entry['humidite']}</td>
-                                        </tr>";
-                                }
-                                
-                                echo "</table>";
-                            } else {
-                                echo "Aucune donnée disponible.";
-                            }
-
+                         
                             ?>
                         </tbody>
                     </table>
