@@ -26,8 +26,40 @@ function insertData($time_val, $temperature_val, $humidity_val, $db){
     
 }
 
-function requestData(){
+function averageData($data){
+    
+    if (!empty($data)) {
 
+        //Size of dataset used to calculate the average
+        $avgSize = 5;
+
+        $lastFiveData = array_slice($data, -$avgSize);
+        
+        
+        if (count($lastFiveData) == $avgSize) {
+            $time = array_slice($data, -1);
+            $temperature = array_sum(array_column($lastFiveData, 'Temperature_value')/ $avgSize);
+            $humidity = array_sum(array_column($lastFiveData, 'Humidity_value')/ $avgSize);
+
+            foreach ($data as $row) {
+                echo "<tr>
+                    <td data-label='rowTime'>{$row['Time_stamp']}</td>
+                </tr>";
+            }
+            echo "<tr>
+                <td data-label='rowTemp'>Temperature: .($temperature). °C</td>
+                <td data-label='rowHumidity'>Humidity: .($humidity). %</td>
+                </tr>";
+        } else {
+            echo "<tr><td colspan='4'>Not enough data</td></tr>";
+        }
+    } else {
+        echo "<tr><td colspan='4'>Aucune donnée disponible</td></tr>";
+    }
 }
 
 ?>
+
+
+    
+   
