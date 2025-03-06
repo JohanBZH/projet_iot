@@ -18,7 +18,8 @@
             <form action="account.php" method="POST">
                 <input type="text" name="login" placeholder="Nom d'utilisateur">
                 <input type="text" name="password" placeholder="Mot de passe">
-                <button type="submit">Se connecter</button>
+                <button type="submit" id="signin">Se connecter</button>
+                <button type="submit" id="signup">S'inscrire</button>
             </form>
         </div>
         </div>

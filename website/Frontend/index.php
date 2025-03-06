@@ -54,6 +54,7 @@ try {
     <header>
         <div id="header">
         <h1>Bienvenue sur la micro-station météo du CESI de Brest</h1>
+        <a href="login.php" id="openLogin">LOGIN</a>
         </div>
     </header>
     <main>
