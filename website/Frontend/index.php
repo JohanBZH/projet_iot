@@ -75,7 +75,7 @@ try {
 
                             $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp DESC";
                             $result = $db->query($query);
-                            $data = $result->fetchAll(); // Récupère les données sous forme de tableau associatif
+                            $data = $result->fetchAll(); // Get data in an associative array
 
                             calculateSlidingAverage($data, $averageTable);
                          
