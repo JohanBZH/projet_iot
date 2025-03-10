@@ -93,5 +93,44 @@ try {
     </footer>
 
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+    var averageTemperature= <?php echo json_encode(array_column($averageTable, 'temperature')); ?>;
+    var averageHumidity = <?php echo json_encode(array_column($averageTable, 'humidite')); ?>;
+    var labels = <?php echo json_encode(array_column($averageTable, 'time')); ?>;
+    
+        for(let key in labels){
+            labels[key] = labels[key].slice(5,16)
+        }
+        console.log(labels);
+
+        const dataTemp = {
+        labels: labels,
+        datasets: [{
+            label: 'Temperature',
+            data: averageTemperature,
+            fill: false,
+            borderColor: 'rgb(253, 108, 158)',
+            tension: 0.3
+        },
+        {
+            label: 'Humidité',
+            data: averageHumidity,
+            fill: false,
+            borderColor: 'rgb(64,224,208)',
+            tension: 0.3
+        }]
+        };
+
+        const config = {
+            type: 'line',
+            data: dataTemp,
+        };
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>
 </body>
 </html>
