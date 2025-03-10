@@ -98,6 +98,21 @@ try {
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+    <?php  
+
+        $query = "SELECT Temperature_value, FROM Data ORDER BY Time_stamp DESC";
+        $result = $db->query($query);
+        $dataTemperature = $result->fetchAll(); // Get data in an associative array
+        $query = "SELECT Humidity_value, FROM Data ORDER BY Time_stamp DESC";
+        $result = $db->query($query);
+        $dataHumidity = $result->fetchAll(); // Get data in an associative array
+
+        $averageTemperature = [];
+        $averageHumidity = [];
+
+        calculateSlidingAverage($dataTemperature, $averageTemperature);
+        calculateSlidingAverage($dataHumidity, $averageHumidity);
+    ?>
     const labels = ['14h', '15h', '16h', '17h', '18h', '19h', '20h'];
 
         const dataTemp = {
