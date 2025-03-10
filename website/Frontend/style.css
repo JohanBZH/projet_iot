@@ -95,6 +95,7 @@ a:active {
 #recentTable {
     overflow-x: auto;
     height: 8rem;
+    height: 15rem;
 }
 
 
@@ -103,6 +104,7 @@ table {
     border-radius: 25% 10%;
     border: solid 1px black;
     border-collapse: collapse;
+
 }
 
 th, td {
