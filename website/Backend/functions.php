@@ -10,11 +10,6 @@ function insertUser($login1, $password1, $db){
 
 }
 
-function controlUser($login1, $password1, $db){
-
-
-}
-
 function insertData($time_val, $temperature_val, $humidity_val, $db){
 
     $insertStmt = $db->prepare("INSERT INTO Data (Time_stamp, Temperature_value, Humidity_value) VALUES (:time_val, :temperature_val, :humidity_val)");
@@ -26,37 +21,61 @@ function insertData($time_val, $temperature_val, $humidity_val, $db){
     
 }
 
-function averageData($data){
-    
-    if (!empty($data)) {
+// ---------------------------------------------------
 
-        //Size of dataset used to calculate the average
-        $avgSize = 5;
+function calculateSlidingAverage($data, &$averageTable) {
+    $averageSize=5;
+    $dataLength = count($data);
 
-        $lastFiveData = array_slice($data, -$avgSize);
+    // Check for data availability
+    if ($dataLength >= $averageSize) {
         
-        
-        if (count($lastFiveData) == $avgSize) {
-            $time = array_slice($data, -1);
-            $temperature = array_sum(array_column($lastFiveData, 'Temperature_value')/ $avgSize);
-            $humidity = array_sum(array_column($lastFiveData, 'Humidity_value')/ $avgSize);
+    for($i = 0; $i <= ($dataLength-$averageSize); $i++){
 
-            foreach ($data as $row) {
-                echo "<tr>
-                    <td data-label='rowTime'>{$row['Time_stamp']}</td>
-                </tr>";
-            }
+        // Get the last five datas
+        $lastFiveData = array_slice($data, $i, $averageSize);
+
+        // Calculate average
+        $temperatureColumn = array_column($lastFiveData, 'Temperature_value');
+        $temperatureAverage = round(array_sum($temperatureColumn) / $averageSize, 2);
+
+        $humidityColumn = array_column($lastFiveData, 'Humidity_value');
+        $humidityAverage = round(array_sum($humidityColumn) / $averageSize, 2);
+
+        // Get unique timestamp for each 5 datas
+        $lastTimestamp = $lastFiveData[0]['Time_stamp'];
+
+        // Add datas to an array
+        $averageTable[] = [
+            'time' => $lastTimestamp,
+            'temperature' => $temperatureAverage,
+            'humidite' => $humidityAverage
+        ];
+        }    
+
+        // Print table
+        if (!empty($averageTable)) {
             echo "<tr>
-                <td data-label='rowTemp'>Temperature: .($temperature). °C</td>
-                <td data-label='rowHumidity'>Humidity: .($humidity). %</td>
+                    <th class='stickyHeader'>Time</th>
+                    <th class='stickyHeader'>Temperature (°C)</th>
+                    <th class='stickyHeader'>Humidité (%)</th>
                 </tr>";
-        } else {
-            echo "<tr><td colspan='4'>Not enough data</td></tr>";
+            
+            foreach ($averageTable as $entry) {
+                echo "<tr>
+                        <td>{$entry['time']}</td>
+                        <td>{$entry['temperature']}</td>
+                        <td>{$entry['humidite']}</td>
+                    </tr>";
+            }
         }
-    } else {
-        echo "<tr><td colspan='4'>Aucune donnée disponible</td></tr>";
-    }
+            
+            return true;
+        }
+    
+    return false;
 }
+
 
 ?>
 

@@ -33,7 +33,6 @@ try {
         $stmt->bindParam(':humidity', $floatHumidity);
         $stmt->bindParam(':time_stamp', $time_stamp);
         $stmt->execute();
-
     }
 
 } catch(PDOException $e) {
@@ -74,13 +73,12 @@ try {
                             //Save the data averages
                             $averageTable = [];
 
-                            $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp DESC LIMIT 10";
+                            $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp DESC";
                             $result = $db->query($query);
-                            $data = $result->fetchAll(); // Récupère les données sous forme de tableau associatif
+                            $data = $result->fetchAll(); // Get data in an associative array
 
                             calculateSlidingAverage($data, $averageTable);
-
-                            // Print table
+                         
                             ?>
                         </tbody>
                     </table>

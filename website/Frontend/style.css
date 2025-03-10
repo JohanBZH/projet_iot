@@ -92,6 +92,7 @@ a:active {
 
 #recentTable {
     overflow-x: auto;
+    height: 15rem;
 }
 
 table {
@@ -100,14 +101,18 @@ table {
     border: solid 1px black;
     border-collapse: collapse;
     box-shadow: 5px 5px 10px rgba(104, 104, 104, 0.3);
+    overflow: auto;
 }
 
 th, td {
     border: 1px solid;
   }
 
-th {
+th.stickyHeader {
+    position: sticky;
+    top: 0;
     background-color: rgb(255, 84, 41);
+    z-index: 1;
 }
 
 td {
@@ -160,8 +165,6 @@ td {
     transform: scaleX(-1);
 
 }
-
-
 
 #loginform {
     width: 50vw;
