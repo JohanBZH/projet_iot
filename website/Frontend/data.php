@@ -46,7 +46,6 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="stylesheet" href="style.css">
     <title>Station météo</title>
 </head>
@@ -66,10 +65,8 @@ try {
                     <img src="https://emojitool.com/img/google/15.1/15.1-339.png" alt=""  id="sunnyemoji" class="emoji">
                     <img src="" alt="https://emojitool.com/img/messenger/1.0/cloud-5505.png"  id="cloudyemoji" class="emoji">   -->
                 </div>
-                <h2>Il fait actuellement</h2>
+                <h2>Affichage live</h2>
                 <div class="horizontal" id="recentTable">
-                    <table>
-                        <tbody>
                         <?php
                             //Save the data averages
                             $averageTable = [];
@@ -78,23 +75,13 @@ try {
                             $result = $db->query($query);
                             $data = $result->fetchAll(); // Get data in an associative array
 
-                            //Afficher Température et humidité en temps réel
+                            calculateSlidingAverage($data, $averageTable);
                          
                             ?>
-                        </tbody>
-                    </table>
                 </div>
-            </div>
-        </div>
-        <div class="horizontal" >
-            <div id="loginform">
-                <h2>Connectez-vous pour accéder aux données</h2>
-            <form action="account.php" method="POST">
-                <input type="text" name="login" placeholder="Nom d'utilisateur">
-                <input type="text" name="password" placeholder="Mot de passe">
-                <button type="submit" id="signin">Se connecter</button>
-                <button type="submit" id="signup">S'inscrire</button>
-            </form>
+                <div class="graph">
+                    <img src="https://weather-and-climate.com/uploads/average-rainfall-france-brest-fr.png" alt="">
+                </div>
             </div>
         </div>
     </main>
@@ -103,7 +90,6 @@ try {
         <a href="https://github.com/MarieEustace">Marie Eustace</a>
         <a href="https://github.com/yoannmey/">Yoann Meynsan</a>
     </footer>
-
 
     <script src="script.js"></script>
 </body>

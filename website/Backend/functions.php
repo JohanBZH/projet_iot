@@ -56,12 +56,13 @@ function calculateSlidingAverage($data, &$averageTable) {
         // Print table
         if (!empty($averageTable)) {
             echo "<table border='1'>
-                    <tr>
-                        <th>Time</th>
-                        <th>Temperature (°C)</th>
-                        <th>Humidité (%)</th>
-                    </tr>";
-            
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Temperature (°C)</th>
+                            <th>Humidité (%)</th>
+                        </tr>
+                    </thead>";
             foreach ($averageTable as $entry) {
                 echo "<tr>
                         <td>{$entry['time']}</td>
@@ -79,7 +80,6 @@ function calculateSlidingAverage($data, &$averageTable) {
     
     return false;
 }
-
 
 ?>
 

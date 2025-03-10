@@ -25,16 +25,16 @@
 // } 
 
 
-function nightOrDay() {
-    if (currentTime > 17 && currentTime < 7) {
-        console.log("it's nighttime");
-        background.classList.add("night");
+// function nightOrDay() {
+//     if (currentTime > 17 && currentTime < 7) {
+//         console.log("it's nighttime");
+//         background.classList.add("night");
         
-    } else {
-        background.classList.remove("night");
-        console.log("it's daytime");
-    }
-}
+//     } else {
+//         background.classList.remove("night");
+//         console.log("it's daytime");
+//     }
+// }
 
 
 let background = document.querySelector("#weather");
@@ -50,5 +50,5 @@ const TODAY = new Date();
 let currentTime = TODAY.getHours();
 
 
-nightOrDay();
-weatherForecast();
+// nightOrDay();
+// weatherForecast();
