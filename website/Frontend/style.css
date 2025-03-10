@@ -59,6 +59,8 @@ main {
 
 footer {
     display: flex;
+    position: sticky;
+    align-items: flex-end;
     justify-content: space-around;
     /* background: rgb(230, 230, 230); */
     /* position: sticky; */
@@ -101,15 +103,17 @@ table {
     border-radius: 25% 10%;
     border: solid 1px black;
     border-collapse: collapse;
-
 }
 
 th, td {
     border: 1px solid;
   }
 
-th {
+th.stickyHeader {
+    position: sticky;
+    top: 0;
     background-color: rgb(255, 84, 41);
+    z-index: 1;
 }
 
 td {
@@ -162,8 +166,6 @@ td {
     transform: scaleX(-1);
 
 }
-
-
 
 #loginform {
     width: 50vw;

@@ -57,15 +57,19 @@ Install and set up composer to install vlucas/phpdotenv to be able to use a .env
 
 # Hardware and Software 
 
-For this project, we had to get the temperature and the percent of humidty in the classroom. So, to catch those datas we used some hardware devices: 
+For this project, our goal was to capture the temperature and the percentage of humidity in the room. 
 
-- Lora32 Wifi V3
-- DHT22
-- Liquid crystal LCD 16,2
+* **Hardware requirements:**
+  - Lora32 Wifi V3
+  - DHT22
+  - Liquid crystal LCD 16,2
 
-We also use the Arduino IDE for programming and send the code to the hardware part.
+* **Software requirements:**
+  - Arduino IDE
+  - Filezilla
+  - phpMyAdmin
 
-## The hardware
+## Hardware
 
 ### LoRa32 Wifi V3
 
@@ -77,55 +81,85 @@ The DHT22 is a temperature and humity sensor that can be connected to an Arduino
 
 ### Liquid crystal LCD 16,2
 
-The Liquid crystal LCD is a screen that can display informations from the ESP32.
+The Liquid crystal LCD is a screen that can display information from the ESP32.
 
-## The software
+## Software
 
 ### Boards and libs
 
-To connect the ESP to the Arduino IDE we had to use a specific board, the **LoRa32 Wifi v3** and select the right **port COM**.
+To connect the ESP to the Arduino IDE, you have to use a specific board, the **LoRa32 Wifi v3**, and select the right **port COM**.
 
-To use this board you have to install the **Heltec ESP32 Series Dev-boards** on the Arduino IDE, follow this few steps to add it to the Arduino IDE:
+In order to install the **Heltec ESP32 Series Dev-boards** on the Arduino IDE, follow the next steps:
 
 - In File -> Preferences -> Additional boards manager URLs, add this url: https://resource.heltec.cn/download/package_heltec_esp32_index.json
+if you have an "Error downloading" on the IDE for this URL, use this one instead: https://github.com/Heltec-Aaron-Lee/WiFi_Kit_series/releases/download/0.0.1/package_heltec_esp32_index.json
 
-- Go to the Boards Manager, type ESP32, click install for the Heltec ESP32 Series Dev-Boards.
+- In Tools -> Board:"" -> Boards Manager, type ESP32, click install on the Heltec ESP32 Series Dev-Boards.
 
-- After that you just have to select the LoRa32 Wifi V3 model in:
+- Select the LoRa32 Wifi V3 model in:
     Tools -> Board :"" -> Heltec ESP32 Series Dev-boards
 
-To get the right port com you have to the **windows device manager** and check the line **Ports (COM and LPT)**. This line won't appear if the LoRa isn't connect to your computer.
+- Connect the LoRa to your computer.
 
-Now, in the Arduino IDE you can select the right board and the right COM.
+* **on Windows:**
+To get the right port com, open the **Windows device manager** and check the line **Ports (COM and LPT)**. This line won't appear if the LoRa isn't connect to your computer.
 
-For programming the different devices who's connected to the LoRa you have to use some libs. 
+* **on Linux:**
+Open a terminal and type:
+`cd /` and then 
+`ls /dev/tty*`
+find a port named /dev/ttyUSB* or /dev/ttyACM* (for example, /dev/ttyUSB0) and use it as the value of Port input argument while creating the Arduino object to establish connection to ESP32 board.
 
-For this project we used:
+In the Arduino IDE, select the right board and the right COM in Tools.
 
-- DHT.h --> for the DHT22 sensor
+To program the different devices connected to the LoRa, use these libraries on the IDE: 
 - WiFi.h --> to connect the LoRa32 to the wifi
+- HTTPClient.h --> 
 - LiquidCrystal.h --> for the LCD screen 
+- DHT.h --> for the DHT22 sensor
+
+You might have to install some of these libraries (LiquidCrystal and DHT sensor library) through Tools -> Manage libraries.
 
 
 # Alwaysdata
 
-### Connexion au site:
+Deploy your website through Alwaysdata (for free if you need < 100Mb of disk space):
+- create an account on https://www.alwaysdata.com/en/
+- pick an available website address
+
+### Connection to the website through Alwaysdata:
 
 login: yoann.meynsan@viacesi.fr
 
 password: jomayo29200
 
-### Connexion ftp:
+
+# Filezilla
+
+Open Filezilla and connect to the FTP from your newly created website in order to send your files.
+
+### Connection to the FTP through Filezilla:
 
 login: jomayo
 
 password: Jomayo29200BREST
 
-hôte: ftp-jomayo.alwaysdata.net
+host: ftp-jomayo.alwaysdata.net
 
-url du site: https://jomayo.alwaysdata.net/Frontend/
+port: default
 
-### Connexion phpMyAdmin
+website URL: https://jomayo.alwaysdata.net/Frontend/
+
+
+# PHPMyAdmin
+   . 
+- create an account on the website
+- import your database
+- link it to your website 
+
+### Connection phpMyAdmin
+
+account: https://phpmyadmin.alwaysdata.com/
 
 login: jomayo
 

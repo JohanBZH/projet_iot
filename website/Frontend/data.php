@@ -76,7 +76,8 @@ try {
                             $data = $result->fetchAll(); // Get data in an associative array
 
                             calculateSlidingAverage($data, $averageTable);
-                         
+
+                            insertInTable($averageTable);
                             ?>
                 </div>
                 <div class="graph">

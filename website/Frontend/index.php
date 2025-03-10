@@ -78,7 +78,8 @@ try {
                             $result = $db->query($query);
                             $data = $result->fetchAll(); // Get data in an associative array
 
-                            //Afficher Température et humidité en temps réel
+                            calculateSlidingAverage($data, $averageTable);
+                            insertInTable($averageTable);
                          
                             ?>
                         </tbody>
@@ -86,6 +87,11 @@ try {
                 </div>
             </div>
         </div>
+
+        <div class="graph">
+            <canvas id="myChart"></canvas>
+        </div>
+
         <div class="horizontal" >
             <div id="loginform">
                 <h2>Connectez-vous pour accéder aux données</h2>
@@ -95,7 +101,7 @@ try {
                 <button type="submit" id="signin">Se connecter</button>
                 <button type="submit" id="signup">S'inscrire</button>
             </form>
-            </div>
+        </div>
         </div>
     </main>
     <footer>
@@ -106,5 +112,55 @@ try {
 
 
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    <?php  
+
+        $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp DESC LIMIT 25";
+        $result = $db->query($query);
+        $data = $result->fetchAll((PDO::FETCH_ASSOC)); // Get data in an associative array
+        
+        $average = [];
+
+        $average= calculateSlidingAverage($data, $average);
+        
+    ?>
+    var averageTemperature= <?php echo json_encode(array_column($average, 'temperature')); ?>;
+    var averageHumidity = <?php echo json_encode(array_column($average, 'humidite')); ?>;
+    var labels = <?php echo json_encode(array_column($average, 'time')); ?>;
+
+        for(time in labels){
+            time = time.slice(5,11 )
+            console.log(time);
+        }
+        console.log(labels);
+
+        const dataTemp = {
+        labels: labels,
+        datasets: [{
+            label: 'Temperature',
+            data: averageTemperature,
+            fill: false,
+            borderColor: 'rgb(253, 108, 158)',
+            tension: 0.3
+        },
+        {
+            label: 'Humidité',
+            data: averageHumidity,
+            fill: false,
+            borderColor: 'rgb(64,224,208)',
+            tension: 0.3
+        }]
+        };
+
+        const config = {
+            type: 'line',
+            data: dataTemp,
+        };
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>
 </body>
 </html>
