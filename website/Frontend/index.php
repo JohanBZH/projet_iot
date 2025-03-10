@@ -74,7 +74,7 @@ try {
                             //Save the data averages
                             $averageTable = [];
 
-                            $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp DESC";
+                            $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp ASC";
                             $result = $db->query($query);
                             $data = $result->fetchAll(); // Get data in an associative array
 
@@ -102,24 +102,13 @@ try {
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-    <?php  
 
-        $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp DESC LIMIT 25";
-        $result = $db->query($query);
-        $data = $result->fetchAll((PDO::FETCH_ASSOC)); // Get data in an associative array
-        
-        $average = [];
-
-        $average= calculateSlidingAverage($data, $average);
-        
-    ?>
-    var averageTemperature= <?php echo json_encode(array_column($average, 'temperature')); ?>;
-    var averageHumidity = <?php echo json_encode(array_column($average, 'humidite')); ?>;
-    var labels = <?php echo json_encode(array_column($average, 'time')); ?>;
-
-        for(time in labels){
-            time = time.slice(5,11 )
-            console.log(time);
+    var averageTemperature= <?php echo json_encode(array_column($averageTable, 'temperature')); ?>;
+    var averageHumidity = <?php echo json_encode(array_column($averageTable, 'humidite')); ?>;
+    var labels = <?php echo json_encode(array_column($averageTable, 'time')); ?>;
+    
+        for(let key in labels){
+            labels[key] = labels[key].slice(5,16)
         }
         console.log(labels);
 
