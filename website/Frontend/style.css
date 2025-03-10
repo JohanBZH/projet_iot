@@ -59,6 +59,8 @@ main {
 
 footer {
     display: flex;
+    position: sticky;
+    align-items: flex-end;
     justify-content: space-around;
     /* background: rgb(230, 230, 230); */
     /* position: sticky; */
