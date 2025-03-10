@@ -46,7 +46,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <link rel="stylesheet" href="style.css">
     <title>Station météo</title>
 </head>
@@ -66,7 +66,7 @@ try {
                     <img src="https://emojitool.com/img/google/15.1/15.1-339.png" alt=""  id="sunnyemoji" class="emoji">
                     <img src="" alt="https://emojitool.com/img/messenger/1.0/cloud-5505.png"  id="cloudyemoji" class="emoji">   -->
                 </div>
-                <h2>Affichage live / graphs sur les 10 dernières min</h2>
+                <h2>Il fait actuellement</h2>
                 <div class="horizontal" id="recentTable">
                     <table>
                         <tbody>
@@ -85,10 +85,23 @@ try {
                         </tbody>
                     </table>
                 </div>
-                <div class="graph">
-                <canvas id="myChart"></canvas>
-                </div>
             </div>
+        </div>
+
+        <div class="graph">
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <div class="horizontal" >
+            <div id="loginform">
+                <h2>Connectez-vous pour accéder aux données</h2>
+            <form action="account.php" method="POST">
+                <input type="text" name="login" placeholder="Nom d'utilisateur">
+                <input type="text" name="password" placeholder="Mot de passe">
+                <button type="submit" id="signin">Se connecter</button>
+                <button type="submit" id="signup">S'inscrire</button>
+            </form>
+        </div>
         </div>
     </main>
     <footer>
@@ -97,7 +110,6 @@ try {
         <a href="https://github.com/yoannmey/">Yoann Meynsan</a>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
