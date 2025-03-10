@@ -81,33 +81,12 @@ try {
                             calculateSlidingAverage($data, $averageTable);
 
                             // Print table
-                            if (!empty($averageTable)) {
-                                echo "<table border='1'>
-                                        <tr>
-                                            <th>Time</th>
-                                            <th>Temperature (°C)</th>
-                                            <th>Humidité (%)</th>
-                                        </tr>";
-                                
-                                foreach ($averageTable as $entry) {
-                                    echo "<tr>
-                                            <td>{$entry['time']}</td>
-                                            <td>{$entry['temperature']}</td>
-                                            <td>{$entry['humidite']}</td>
-                                        </tr>";
-                                }
-                                
-                                echo "</table>";
-                            } else {
-                                echo "Aucune donnée disponible.";
-                            }
-
                             ?>
                         </tbody>
                     </table>
                 </div>
                 <div class="graph">
-                    <img src="https://weather-and-climate.com/uploads/average-rainfall-france-brest-fr.png" alt="">
+                <canvas id="myChart"></canvas>
                 </div>
             </div>
         </div>
@@ -119,5 +98,36 @@ try {
     </footer>
 
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    const labels = ['14h', '15h', '16h', '17h', '18h', '19h', '20h'];
+
+        const dataTemp = {
+        labels: labels,
+        datasets: [{
+            label: 'Temperature',
+            data: [20, 21, 22, 21, 18, 15, 16],
+            fill: false,
+            borderColor: 'rgb(253, 108, 158)',
+            tension: 0.3
+        },
+        {
+            label: 'Humidité',
+            data: [16, 17, 16, 18, 15, 16, 18],
+            fill: false,
+            borderColor: 'rgb(64,224,208)',
+            tension: 0.3
+        }]
+        };
+
+        const config = {
+            type: 'line',
+            data: dataTemp,
+        };
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>
 </body>
 </html>
