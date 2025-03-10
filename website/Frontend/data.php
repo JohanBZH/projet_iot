@@ -46,7 +46,6 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <title>Station météo</title>
 </head>
@@ -66,10 +65,8 @@ try {
                     <img src="https://emojitool.com/img/google/15.1/15.1-339.png" alt=""  id="sunnyemoji" class="emoji">
                     <img src="" alt="https://emojitool.com/img/messenger/1.0/cloud-5505.png"  id="cloudyemoji" class="emoji">   -->
                 </div>
-                <h2>Affichage live / graphs sur les 10 dernières min</h2>
+                <h2>Affichage live</h2>
                 <div class="horizontal" id="recentTable">
-                    <table>
-                        <tbody>
                         <?php
                             //Save the data averages
                             $averageTable = [];
@@ -79,14 +76,12 @@ try {
                             $data = $result->fetchAll(); // Get data in an associative array
 
                             calculateSlidingAverage($data, $averageTable);
+
                             insertInTable($averageTable);
-                         
                             ?>
-                        </tbody>
-                    </table>
                 </div>
                 <div class="graph">
-                <canvas id="myChart"></canvas>
+                    <img src="https://weather-and-climate.com/uploads/average-rainfall-france-brest-fr.png" alt="">
                 </div>
             </div>
         </div>
@@ -97,58 +92,6 @@ try {
         <a href="https://github.com/yoannmey/">Yoann Meynsan</a>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
     <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-    <?php  
-
-        $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp DESC LIMIT 25";
-        $result = $db->query($query);
-        $data = $result->fetchAll((PDO::FETCH_ASSOC)); // Get data in an associative array
-        
-        $average = [];
-
-        $average= calculateSlidingAverage($data, $average);
-        
-    ?>
-    var averageTemperature= <?php echo json_encode(array_column($average, 'temperature')); ?>;
-    var averageHumidity = <?php echo json_encode(array_column($average, 'humidite')); ?>;
-    var labels = <?php echo json_encode(array_column($average, 'time')); ?>;
-
-        for(time in labels){
-            time = time.slice(5,11 )
-            console.log(time);
-        }
-        console.log(labels);
-
-        const dataTemp = {
-        labels: labels,
-        datasets: [{
-            label: 'Temperature',
-            data: averageTemperature,
-            fill: false,
-            borderColor: 'rgb(253, 108, 158)',
-            tension: 0.3
-        },
-        {
-            label: 'Humidité',
-            data: averageHumidity,
-            fill: false,
-            borderColor: 'rgb(64,224,208)',
-            tension: 0.3
-        }]
-        };
-
-        const config = {
-            type: 'line',
-            data: dataTemp,
-        };
-        const myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-        );
-    </script>
 </body>
 </html>

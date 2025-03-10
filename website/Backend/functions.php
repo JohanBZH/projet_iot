@@ -54,28 +54,32 @@ function calculateSlidingAverage($data, &$averageTable) {
         }    
 
         // Print table
-        if (!empty($averageTable)) {
-            echo "<tr>
-                    <th class='stickyHeader'>Time</th>
-                    <th class='stickyHeader'>Temperature (°C)</th>
-                    <th class='stickyHeader'>Humidité (%)</th>
-                </tr>";
-            
-            foreach ($averageTable as $entry) {
-                echo "<tr>
-                        <td>{$entry['time']}</td>
-                        <td>{$entry['temperature']}</td>
-                        <td>{$entry['humidite']}</td>
-                    </tr>";
-            }
-        }
-            
-            return true;
+        
+            return $averageTable;
         }
     
     return false;
 }
 
+function insertInTable($DataToInsert){
+
+    if (!empty($DataToInsert)) {
+        echo "<tr>
+                <th class='stickyHeader'>Time</th>
+                <th class='stickyHeader'>Temperature (°C)</th>
+                <th class='stickyHeader'>Humidité (%)</th>
+            </tr>";
+        
+        foreach ($DataToInsert as $entry) {
+            echo "<tr>
+                    <td>{$entry['time']}</td>
+                    <td>{$entry['temperature']}</td>
+                    <td>{$entry['humidite']}</td>
+                </tr>";
+        }
+    }
+        
+}
 
 ?>
 
