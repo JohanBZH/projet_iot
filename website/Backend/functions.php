@@ -64,11 +64,12 @@ function calculateSlidingAverage($data, &$averageTable) {
 function insertInTable($DataToInsert){
 
     if (!empty($DataToInsert)) {
-        echo "<tr>
-                <th class='stickyHeader'>Time</th>
-                <th class='stickyHeader'>Temperature (°C)</th>
-                <th class='stickyHeader'>Humidité (%)</th>
-            </tr>";
+        echo "<table>
+                <tr>
+                    <th class='stickyHeader'>Time</th>
+                    <th class='stickyHeader'>Temperature (°C)</th>
+                    <th class='stickyHeader'>Humidité (%)</th>
+                </tr>";
         
         foreach ($DataToInsert as $entry) {
             echo "<tr>
@@ -77,6 +78,7 @@ function insertInTable($DataToInsert){
                     <td>{$entry['humidite']}</td>
                 </tr>";
         }
+        echo "</table>";
     }
         
 }
