@@ -34,14 +34,8 @@ include '../Backend/functions.php';
                         <?php
                             //Save the data averages
                             $averageTable = [];
-
-                            $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp ASC";
-                            $result = $db->query($query);
-                            $data = $result->fetchAll(); // Get data in an associative array
-
+                            queryAllData();
                             calculateSlidingAverage($data, $averageTable);
-                            insertInTable($averageTable);
-                         
                             ?>
                         </tbody>
                     </table>

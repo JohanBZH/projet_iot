@@ -30,17 +30,24 @@ include '../Backend/functions.php';
                 <h2>Affichage live</h2>
                 <div class="horizontal" id="recentTable">
                         <?php
-                            //Save the data averages
+                            //Open a php session
+                            // session_start();
+                            //Get all the data
                             $averageTable = [];
+                            $data = queryAllData($db);
 
-                            $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp DESC";
-                            $result = $db->query($query);
-                            $data = $result->fetchAll(); // Get data in an associative array
-
+                            //Calculate by batches of 5 data set the average to smoothen the datas
                             calculateSlidingAverage($data, $averageTable);
-
                             insertInTable($averageTable);
+
+                            //Save the data in session
+                            $_SESSION['data_to_export'] = $data;
                             ?>
+                </div>
+                <div class="dataExport">
+                    <form action="../Backend/functions.php" method="POST">
+                        <input type="submit" class="dataExportBtn" name="export" value="Télécharger les données">
+                    </form>
                 </div>
                 <div class="graph">
                     <img src="https://weather-and-climate.com/uploads/average-rainfall-france-brest-fr.png" alt="">
@@ -54,7 +61,7 @@ include '../Backend/functions.php';
         <a href="https://github.com/yoannmey/">Yoann Meynsan</a>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
 
@@ -93,6 +100,6 @@ include '../Backend/functions.php';
             document.getElementById('myChart'),
             config
         );
-    </script>
+    </script> -->
 </body>
 </html>
