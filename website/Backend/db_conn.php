@@ -23,7 +23,7 @@ try {
 
     $db = new PDO($dsn, $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $options);
 
-
+    return $db;
 
 } catch(PDOException $e) {
     error_log("Database error: " . $e->getMessage());
