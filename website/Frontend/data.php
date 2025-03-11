@@ -1,7 +1,5 @@
 <?php
-include '../Backend/db_conn.php';
-// include '../Backend/functions.php';
-// include '../Backend/vendor/autoload.php';
+include '../Backend/functions.php';
 
 ?>
 
