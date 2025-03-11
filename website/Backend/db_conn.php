@@ -9,7 +9,7 @@ $deb = 0;
 $temperature = isset($_GET['temperature']) ? $_GET['temperature'] : null;
 $humidity = isset($_GET['humidity']) ? $_GET['humidity'] : null;
 $time_stamp = date('Y-m-d H:i:s');
-$email = isset($_POST['mail']) ? $_POST['email'] : null;
+$email = isset($_POST['email']) ? $_POST['email'] : null;
 $password1 = isset($_POST['password1']) ? $_POST['password1'] : null;
 $password2 = isset($_POST['password2']) ? $_POST['password2'] : null;
 
