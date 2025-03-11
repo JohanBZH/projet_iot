@@ -1,6 +1,7 @@
 <?php
 include '../Backend/functions.php';
 
+
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +41,8 @@ include '../Backend/functions.php';
                             calculateSlidingAverage($data, $averageTable);
 
                             insertInTable($averageTable);
+
+                            $db = null; //Ferme la connexion
                             ?>
                 </div>
                 <div class="graph">
