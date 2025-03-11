@@ -1,5 +1,5 @@
 <?php
-
+//Start a session to send data through different files (here data to functions)
 session_start();
 
 include '../Backend/db_conn.php';
@@ -93,8 +93,9 @@ function queryAllData($db){
     return $result->fetchAll(); // Get data in an associative array
 }
 
-// ---------------------------------------------------
+// -----------------------------------------------------
 
+// Calculate the average data by batch of 5 rows, with a shift of 1 rows, to smoothen the measures
 function calculateSlidingAverage($data, &$averageTable) {
     $averageSize=5;
     $dataLength = count($data);
@@ -157,25 +158,27 @@ function insertInTable($DataToInsert){
 
 // -------------------------------------------------------------------------
 
+//Get the data displayed in data.php
 if ($_SERVER["REQUEST_METHOD"] == "POST"
     && isset($_POST['export'])){
-        //get the data saved in the session
+
         $data = $_SESSION['data_to_export'] ?? [];
         exportData($data);
         header("Location: ../Frontend/data.php");
-    }
+}
 
+//Export the data displayed in data.php in a .csv file.
 function exportData($data){
-$debug='Error here';
-    // echo $debug;
 
+    //Create the file
     $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
     $filepath = '../Docs/Exports/' . $filename;
-
+    //Check if the repository exists and has the correct permissions
     if (!file_exists('../Docs/Exports')) {
         mkdir('../Docs/Exports', 0777, true);
     }
 
+    //Complete the file
     $file = fopen($filepath, 'w');
 
     fputcsv($file, ['Time_stamp', 'Temperature_value', 'Humidity_value']);
@@ -190,11 +193,13 @@ $debug='Error here';
 
     fclose($file);
 
+    //Force the download
     header('Content-Type: application/csv');
     header('Content-Disposition: attachment; filename="' . $filename . '"');
     header('Pragma: no-cache');
     readfile($filepath);
 
+    //Delete the temporary file
     unlink($filepath);
 
     exit;

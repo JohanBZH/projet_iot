@@ -31,8 +31,6 @@ include '../Backend/functions.php';
                 <h2>Affichage live</h2>
                 <div class="horizontal" id="recentTable">
                         <?php
-                            //Open a php session
-                            // session_start();
                             //Get all the data
                             $averageTable = [];
                             $data = queryAllData($db);
@@ -41,12 +39,11 @@ include '../Backend/functions.php';
                             calculateSlidingAverage($data, $averageTable);
                             insertInTable($averageTable);
 
-                            //Save the data in session
+                            //Save the data in the session opened in functions.php
                             $_SESSION['data_to_export'] = $data;
-
-                            $db = null; //Ferme la connexion
                             ?>
                 </div>
+                <!-- Data export -->
                 <div class="dataExport">
                     <form action="../Backend/functions.php" method="POST">
                         <input type="submit" class="dataExportBtn" name="export" value="Télécharger les données">
@@ -64,7 +61,7 @@ include '../Backend/functions.php';
         <a href="https://github.com/yoannmey/">Yoann Meynsan</a>
     </footer>
 
-    <!-- <script src="script.js"></script>
+    <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
 
@@ -103,6 +100,6 @@ include '../Backend/functions.php';
             document.getElementById('myChart'),
             config
         );
-    </script> -->
+    </script>
 </body>
 </html>
