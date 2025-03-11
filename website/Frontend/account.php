@@ -1,10 +1,3 @@
-<?php
-include '../Backend/db_conn.php';
-// include '../Backend/functions.php';
-// include '../Backend/vendor/autoload.php';
-
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -22,12 +15,10 @@ include '../Backend/db_conn.php';
         <div class="horizontal" >
             <div id="loginform">
                 
-            <form action="data.php" method="POST">
-                <input type="email" name="email" placeholder="jomayo@winners.fr">
-                <div id="wrongmail"></div>
-                <input type="text" name="password1" placeholder="Mot de passe hyper compliqué">
-                <input type="text" name="password2" placeholder="Confirmez le mot de passe">
-                <button type="submit" id="signup">Créer mon compte</button>
+            <form action="account.php" method="POST">
+                <input type="mail" name="mail" placeholder="jomayo@winners.fr">
+                <input type="text" name="password" placeholder="Mot de passe hyper compliqué">
+                <button type="submit" id="signin">Créer mon compte</button>
             </form>
             </div>
         </div>

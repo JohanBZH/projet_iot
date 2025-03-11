@@ -1,85 +1,23 @@
 <?php
-include '../Backend/db_conn.php';
 
-$msg="";
+function insertUser($login1, $password1, $db){
 
-function checkEmail($email){ // checks email address
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($POST['email'])) { // checks address is not null when sent
-
-    $email_ToFilter = $_POST['email'];
-    } else {
-        $msg = "Error, please try again.";
-    exit();
-    }
-
-$email = filter_var($email_ToFilter, FILTER_VALIDATE_EMAIL);
-
-    if($email == false) { // checks if email address is valid
-
-        $msg = "Invalid email address.";
-        exit();
-    }
-    if ($msg !== "") {
-        echo $msg;
-    }
-}
-
-function insertUser($email, $password1, $password2, $db){
+    $insertStmt = $db->prepare("INSERT INTO App_user (Login, Password) VALUES (:llogin, :ppassword)");
     
-    checkEmail();
-    
-    if (isset($POST['password1']) && isset($POST['password2'])){ // checks passwords are not null
+    $insertStmt->bindParam('llogin',$login1);
+    $insertStmt->bindParam('ppassword',$password1);
+    $insertStmt->execute();
 
-        $password1 = $_POST['password1'];
-        $password2 = $_POST['password2'];
-
-        if ($password1 === $password2) { // checks both passwords are the same
-            
-            // checks the table for identical email address
-            $stmt = $db->prepare("SELECT * FROM App_user WHERE Login = :llogin");
-            $stmt->bindParam(':llogin',$email);
-            $stmt->execute();
-            $row = $stmt->fetch();
-
-            if (rowCount($row) > 0){
-                $msg = "Account already exists. Please sign in instead.";
-            } else {
-
-                // insert new user into table
-                echo "Valid email address.";
-                $stmt = $db->prepare("INSERT INTO App_user ('Login', 'Password') VALUES (:llogin, :ppassword)");
-                $stmt->bindParam(':llogin',$email);
-                $stmt->bindParam(':ppassword',$password1);
-                $stmt->execute();
-                $check=1;
-            }
-        } else {
-            $msg = "Passwords don't match.";
-        }
-    }
-    if ($msg == "") { // new account allows you access to the graph and data table
-        header("Location: data.php?email=".$email . "&msg=".$msg); 
-        exit();
-    } else {
-        echo $msg;
-        exit();
-    }
 }
 
 function insertData($time_val, $temperature_val, $humidity_val, $db){
-    if ($temperature !== null && $humidity !== null && is_numeric($temperature) && is_numeric($humidity)) {
-        $floatTemperature = (float)$temperature;
-        $floatHumidity = (float)$humidity;
 
-        $floatTemperature = $floatTemperature/100;
-        $floatHumidity = $floatHumidity/100;
-
-        $stmt = $db->prepare("INSERT INTO Data (Temperature_value, Humidity_value, Time_stamp) VALUES (:temperature, :humidity, :time_stamp)");
-        $stmt->bindParam(':temperature', $floatTemperature);
-        $stmt->bindParam(':humidity', $floatHumidity);
-        $stmt->bindParam(':time_stamp', $time_stamp);
-        $stmt->execute();
-    }
+    $insertStmt = $db->prepare("INSERT INTO Data (Time_stamp, Temperature_value, Humidity_value) VALUES (:time_val, :temperature_val, :humidity_val)");
+    
+    $insertStmt->bindParam('time_val',$time_val);
+    $insertStmt->bindParam('temperature_val',$temperature_val);
+    $insertStmt->bindParam('humidity_val',$humidity_val);
+    $insertStmt->execute();
     
 }
 
