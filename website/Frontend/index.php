@@ -1,4 +1,7 @@
-<?php include '../Backend/php.php'; ?>
+<?php
+include '../Backend/functions.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +19,36 @@
         </div>
     </header>
     <main>
-        
+        <div id="container weather">
+            <div class="horizontal" >
+                <div class="emoji-container">
+                    <img src="https://emojitool.com/img/google/15.1/15.1-2762.png" alt="" id="snowyemoji" class="emoji">
+                    <!-- <img src="" alt="https://emojitool.com/img/google/15.1/15.1-1446.png"  id="rainyemoji" class="emoji">
+                    <img src="https://emojitool.com/img/google/15.1/15.1-339.png" alt=""  id="sunnyemoji" class="emoji">
+                    <img src="" alt="https://emojitool.com/img/messenger/1.0/cloud-5505.png"  id="cloudyemoji" class="emoji">   -->
+                </div>
+                <h2>Il fait actuellement</h2>
+                <div class="horizontal" id="recentTable">
+                    <table>
+                        <tbody>
+                        <?php
+                            //Save the data averages
+                            $averageTable = [];
+                            queryAllData();
+                            calculateSlidingAverage($data, $averageTable);
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="graph">
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <div class="horizontal" >
+            <div id="loginform">
                 <h2>Connectez-vous pour accéder aux données</h2>
             <form action="account.php" method="POST">
                 <input type="text" name="login" placeholder="Nom d'utilisateur">

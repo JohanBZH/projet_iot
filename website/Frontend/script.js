@@ -49,6 +49,26 @@ let cloudyemoji = document.querySelector("#cloudyemoji");
 const TODAY = new Date();
 let currentTime = TODAY.getHours();
 
+let wrongmail = document.querySelector("#wrongmail");
+
+// Function to validate email format
+function validateEmail(email) {
+var pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+return pattern.test(email);
+}
+// Example usage
+document.getElementById("mail").addEventListener("input", function() {
+var email = this.value;
+if (validateEmail(email)) {
+console.log("Valid email address.");
+} else {
+console.log("Invalid email address.");
+let wrongelem = document.createElement('span');
+wrongelem.innerHTML = "Adresse invalide";
+wrongmail.appendChild(wrongelem);
+}
+});
+
 
 // nightOrDay();
 // weatherForecast();
