@@ -94,7 +94,6 @@ a:active {
 
 #recentTable {
     overflow-x: auto;
-    height: 8rem;
     height: 15rem;
 }
 
@@ -109,7 +108,7 @@ table {
 
 th, td {
     border: 1px solid;
-  }
+}
 
 th.stickyHeader {
     position: sticky;

@@ -2,6 +2,8 @@
 #include <WiFi.h>
 #include <LiquidCrystal.h>
 #include <HTTPClient.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 
 #define brocheDeBranchementDHT 19
 #define typeDeDHT DHT22
@@ -9,14 +11,19 @@
 DHT dht(brocheDeBranchementDHT, typeDeDHT);
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 
-unsigned long previousMillis = 0;  // Compteur pour la gestion du temps
-const long interval = 1000;        // Intervalle de 1 seconde (1000 ms)
+// unsigned long previousMillis = 0;  // Compteur pour la gestion du temps
+// const long interval = 1000;        // Intervalle de 1 seconde (1000 ms)
 
-const String site = "https://jomayo.alwaysdata.net/Frontend/index.php";
+const String site = "https://jomayo.alwaysdata.net/Frontend/data.php";
 
-int seconds = 0;
-int minutes = 0;
-int hours = 0;
+// Define NTP Client to get time
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP);
+
+// Variables to save date and time
+String formattedDate;
+String dayStamp;
+String timeStamp;
 
 
 const char* ssid = "iPhone (9)";    // Remplace par ton SSID
@@ -41,7 +48,14 @@ void setup() {
 
   dht.begin();
 
-  previousMillis = millis();
+  // Initialize a NTPClient to get time
+  timeClient.begin();
+  // Set offset time in seconds to adjust for your timezone, for example:
+  // GMT +1 = 3600
+  // GMT +8 = 28800
+  // GMT -1 = -3600
+  // GMT 0 = 0
+  timeClient.setTimeOffset(3600);
 }
 
 void loop() {
@@ -68,8 +82,6 @@ void loop() {
   Serial.println(" °C");
   Serial.println();
 
-  unsigned long currentMillis = millis();
-
   HTTPClient http;
   temperatureEnCelsius = temperatureEnCelsius*100;
   tauxHumidite = tauxHumidite*100;
@@ -90,26 +102,20 @@ void loop() {
 
   http.end();  // Libérer la ressource
 
-  // Vérifier si une seconde s'est écoulée
-  if (currentMillis - previousMillis >= interval) {
-    // Sauvegarder le dernier moment où l'événement a eu lieu
-    previousMillis = currentMillis;
+  timeClient.forceUpdate();
 
-    // Incrémenter les secondes
-    seconds++;
+  // The formattedDate comes with the following format:
+  // 2018-05-28T16:00:13Z
+  // We need to extract date and time
+  formattedDate = timeClient.getFormattedTime();
+  Serial.println(formattedDate);
 
-    // Si plus de 59 secondes, réinitialiser les secondes et incrémenter les minutes
-    if (seconds >= 60) {
-      seconds = 0;
-      minutes++;
-    }
-
-    // Si plus de 59 minutes, réinitialiser les minutes et incrémenter les heures
-    if (minutes >= 60) {
-      minutes = 0;
-      hours++;
-    }
-  }
+  // Extract date
+  int splitT = formattedDate.indexOf("T");
+  dayStamp = formattedDate.substring(0, splitT);
+  Serial.print("HOUR: ");
+  Serial.println(dayStamp);
+  delay(1000);
 
   temperatureEnCelsius = temperatureEnCelsius/100;
   tauxHumidite = tauxHumidite/100;
@@ -125,12 +131,6 @@ void loop() {
   delay(5000);
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print(hours);
-  lcd.print(":");
-  if (minutes < 10) lcd.print("0");  // Ajouter un zéro devant les minutes < 10
-  lcd.print(minutes);
-  lcd.print(":");
-  if (seconds < 10) lcd.print("0");  // Ajouter un zéro devant les secondes < 10
-  lcd.print(seconds);
+  lcd.print(dayStamp);
   delay(5000);
 }
