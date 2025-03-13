@@ -4,6 +4,17 @@ session_start();
 
 include '../Backend/db_conn.php';
 
+require_once '../Backend/vendor/autoload.php';
+
+//php mailer
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+
+// require_once "vendor/phpmailer/Exception.php";
+// require_once "vendor/phpmailer/PHPmailer.php";
+// require_once "vendor/phpmailer/SMTP.php";
+
 $msg="";
 
 function checkEmail($email){ // checks email address
@@ -82,8 +93,7 @@ function insertData($time_val, $temperature_val, $humidity_val, $db){
         $stmt->bindParam(':humidity', $floatHumidity);
         $stmt->bindParam(':time_stamp', $time_stamp);
         $stmt->execute();
-    }
-    
+    } 
 }
 
 function queryAllData($db){
@@ -162,12 +172,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"
     && isset($_POST['export'])){
 
         $data = $_SESSION['data_to_export'] ?? [];
-        exportData($data);
+        // exportData($data);
+        downloadData($data);
         header("Location: ../Frontend/data.php");
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST"
+    && isset($_POST['exportMail'])){
+        $data = $_SESSION['data_to_export'] ?? [];
+        sendMail($data);
+        // header("Location: ../Frontend/data.php");
 }
 
 //Export the data displayed in data.php in a .csv file.
-function exportData($data){
+function downloadData($data){
 
     //Create the file
     $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
@@ -198,23 +215,94 @@ function exportData($data){
     header('Pragma: no-cache');
     readfile($filepath);
 
-    //Delete the temporary file
+    // //Delete the temporary file
     unlink($filepath);
 
     exit;
 }
 
-function clearDataExports(){
+function sendMail($data){
 
-}
+        //Create the file
+    $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
+    $filepath = '../Docs/Exports/' . $filename;
+    //Check if the repository exists and has the correct permissions
+    if (!file_exists('../Docs/Exports')) {
+        mkdir('../Docs/Exports', 0777, true);
+    }
 
-function getLastInsert($db){
-    
-    $query = "SELECT * FROM Data ORDER BY id_data DESC LIMIT 1";
-    $last = $db->query($query);
-    return $last->fetchAll(); // Get data in an associative array
+    //Complete the file
+    $file = fopen($filepath, 'w');
+
+    fputcsv($file, ['Time_stamp', 'Temperature_value', 'Humidity_value']);
+
+    foreach ($data as $row) {
+        fputcsv($file, [
+            $row['Time_stamp'],
+            $row['Temperature_value'],
+            $row['Humidity_value']
+        ]);
+    }
+
+    fclose($file);
+
+    $mail = new PHPMailer(true);
+
+    try{
+        //Debug
+        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+
+        //Configuration
+
+        //Simple Mail Tranfer Protocol
+        $mail->isSMTP();
+        $mail->Host = 'smtp-jomayo.alwaysdata.net'; //For our host on alwaysdata, use "smtp-jomayo.alwaysdata.net" //for local testing : 'localhost'
+        $mail->Port = 465; //Ou 587 //To test on MailHog 1025
+        
+        //Dans le cas d'une connexion via MailHog
+        //$mail->SMTPAuth = false;
+
+        //Authentification to alwaysdata
+        $mail->SMTPAuth = true;
+        $mail->Username = 'jomayo@alwaysdata.net';
+        $mail->Password = 'jomayo29200!'; //check in always data that de password is set and complex enough
+
+        if ($mail->Port == 465) {
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        } else {
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Pour le port 587
+        }
+
+        //Set waiting time at 10s
+        $mail->Timeout = 10;
+
+        //charset
+        $mail->Charset = "utf-8";
+
+        //recipients
+        $mail->addAddress("trscl.29@gmail.com"); //ajout d'autant d'adresses que nécessaire
+
+        //sender
+        $mail->setFrom("no-reply@jomayo.fr");
+
+        //content
+        $mail->Subject = "Your weather datas";
+        $mail->Body = "Thank you for your trust in JoMaYo weather observations.";
+
+        //Attachment
+        $mail->addAttachment($filepath, $filename);
+
+        //send - wait and redirect
+        $mail->send();
+        echo "Message envoyé <br>";
+        echo '<a href="../Frontend/data.php">Retour à la station météo.</a>';
+        header('Refresh:2; URL=../Frontend/data.php');
+
+    }catch (Exception){
+        echo "Mail non envoyé. Erreur: {$mail->ErrorInfo} <br>";
+        echo '<a href="../Frontend/data.php">Retour à la station météo.</a>';
+    }
 }
-?>
 
 
     
