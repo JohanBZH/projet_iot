@@ -169,3 +169,13 @@ Host : smtp-jomayo.alwaysdata.net
 Port : 465   //The port 587 is also available
 Username : jomayo@alwaysdata.net
 password : jomayo29200!
+
+## Server administration
+
+Check in always data settings that the SSH parameters are correctly set up :
+    You have a SSH user, with a password and "Password connection" is ticked.
+
+To connect from the client :
+```
+ssh jomayo@ssh-jomayo.alwaysdata.net
+```
