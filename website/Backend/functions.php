@@ -249,8 +249,10 @@ function sendMail($data){
     $mail = new PHPMailer(true);
 
     try{
+        //Debug
+        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+
         //Configuration
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER; //infos de débug
 
         //Simple Mail Tranfer Protocol
         $mail->isSMTP();
@@ -290,16 +292,17 @@ function sendMail($data){
         //Attachment
         $mail->addAttachment($filepath, $filename);
 
-        //send
+        //send - wait and redirect
         $mail->send();
-        echo "message envoyé";
+        echo "Message envoyé <br>";
+        echo '<a href="../Frontend/data.php">Retour à la station météo.</a>';
+        header('Refresh:2; URL=../Frontend/data.php');
 
     }catch (Exception){
-        echo "Mail non envoyé. Erreur: {$mail->ErrorInfo}";
+        echo "Mail non envoyé. Erreur: {$mail->ErrorInfo} <br>";
+        echo '<a href="../Frontend/data.php">Retour à la station météo.</a>';
     }
 }
-
-?>
 
 
     
