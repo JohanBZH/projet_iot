@@ -223,63 +223,80 @@ function downloadData($data){
 
 function sendMail($data){
 
-$mail = new PHPMailer(true);
+        //Create the file
+    $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
+    $filepath = '../Docs/Exports/' . $filename;
+    //Check if the repository exists and has the correct permissions
+    if (!file_exists('../Docs/Exports')) {
+        mkdir('../Docs/Exports', 0777, true);
+    }
 
-try{
-    //Configuration
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER; //infos de débug
+    //Complete the file
+    $file = fopen($filepath, 'w');
 
-    //Simple Mail Tranfer Protocol
-    $mail->isSMTP();
-    $mail->Host = 'localhost'; //For our host on alwaysdata, use "smtp-jomayo.alwaysdata.net"
-    $mail->Port = 1025; //To test on MailHog
-    $mail->SMTPAuth = false;
+    fputcsv($file, ['Time_stamp', 'Temperature_value', 'Humidity_value']);
 
-    //charset
-    $mail->Charset = "utf-8";
+    foreach ($data as $row) {
+        fputcsv($file, [
+            $row['Time_stamp'],
+            $row['Temperature_value'],
+            $row['Humidity_value']
+        ]);
+    }
 
-    //recipients
-    $mail->addAddress("test@mail.fr"); //ajout d'autant d'adresses que nécessaire
+    fclose($file);
 
-    //sender
-    $mail->setFrom("no-reply@jomayo.fr");
+    $mail = new PHPMailer(true);
 
-    //content
-    $mail->Subject = "Sujet du message";
-    $mail->Body = "Message";
+    try{
+        //Configuration
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER; //infos de débug
 
-    //send
-    $mail->send();
-    echo "message envoyé";
+        //Simple Mail Tranfer Protocol
+        $mail->isSMTP();
+        $mail->Host = 'smtp-jomayo.alwaysdata.net'; //For our host on alwaysdata, use "smtp-jomayo.alwaysdata.net" //for local testing : 'localhost'
+        $mail->Port = 465; //Ou 587 //To test on MailHog 1025
+        
+        //Dans le cas d'une connexion via MailHog
+        //$mail->SMTPAuth = false;
 
-}catch (Exception){
-    echo "Mail non envoyé. Erreur: {$mail->ErrorInfo}";
-}
+        //Authentification to alwaysdata
+        $mail->SMTPAuth = true;
+        $mail->Username = 'jomayo@alwaysdata.net';
+        $mail->Password = 'jomayo29200!'; //check in always data that de password is set and complex enough
 
-    // //Create the file
-    // $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
-    // $filepath = '../Docs/Exports/' . $filename;
-    // //Check if the repository exists and has the correct permissions
-    // if (!file_exists('../Docs/Exports')) {
-    //     mkdir('../Docs/Exports', 0777, true);
-    // }
+        if ($mail->Port == 465) {
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        } else {
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Pour le port 587
+        }
 
-    // //Complete the file
-    // $file = fopen($filepath, 'w');
+        //Set waiting time at 10s
+        $mail->Timeout = 10;
 
-    // fputcsv($file, ['Time_stamp', 'Temperature_value', 'Humidity_value']);
+        //charset
+        $mail->Charset = "utf-8";
 
-    // foreach ($data as $row) {
-    //     fputcsv($file, [
-    //         $row['Time_stamp'],
-    //         $row['Temperature_value'],
-    //         $row['Humidity_value']
-    //     ]);
-    // }
+        //recipients
+        $mail->addAddress("trscl.29@gmail.com"); //ajout d'autant d'adresses que nécessaire
 
-    // fclose($file);
+        //sender
+        $mail->setFrom("no-reply@jomayo.fr");
 
-    // exit;
+        //content
+        $mail->Subject = "Your weather datas";
+        $mail->Body = "Thank you for your trust in JoMaYo weather observations.";
+
+        //Attachment
+        $mail->addAttachment($filepath, $filename);
+
+        //send
+        $mail->send();
+        echo "message envoyé";
+
+    }catch (Exception){
+        echo "Mail non envoyé. Erreur: {$mail->ErrorInfo}";
+    }
 }
 
 ?>
