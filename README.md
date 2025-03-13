@@ -2,11 +2,12 @@
 Collecter, stocker et traiter des données de température et d'humidité
 
 ## Votre projet “open-source” :
-    • Devra être accessible sur git - Github
-    • Vous devrez soumettre ce git à votre direction avant votre présentation afin qu’il puisse auditer le travail de votre équipe  
+[Github - Projet IOT](https://github.com/JohanBZH/projet_iot)
 
-## Votre application devra :
-    • Disposer d’une interface web consultable à travers un simple navigateur  
+## L'application est disponible :
+[jomayo.alwaysdata.net](jomayo.alwaysdata.net)
+
+    • D’une interface web consultable à travers un simple navigateur  
     • Être “responsive”  
     • Inclure un graphique des données température/humidité  
     • BONUS : un bouton de “partage” du graphique ou du dernier relevé vous permettra d’envoyer facilement les données à vos amis/familles (mail, réseaux sociaux, autres ?)  
@@ -121,46 +122,50 @@ To program the different devices connected to the LoRa, use these libraries on t
 You might have to install some of these libraries (LiquidCrystal and DHT sensor library) through Tools -> Manage libraries.
 
 
-# Alwaysdata
+## Host - Alwaysdata
 
-Deploy your website through Alwaysdata (for free if you need < 100Mb of disk space):
+To deploy your website through Alwaysdata (for free if you need < 100Mb of disk space):
 - create an account on https://www.alwaysdata.com/en/
 - pick an available website address
 
 ### Connection to the website through Alwaysdata:
 
 login: yoann.meynsan@viacesi.fr
-
 password: jomayo29200
-
-
-# Filezilla
-
-Open Filezilla and connect to the FTP from your newly created website in order to send your files.
 
 ### Connection to the FTP through Filezilla:
 
-login: jomayo
+We chose the FTP client Filezilla.
+Open Filezilla and connect to the FTP from your newly created website in order to send your files.
 
+login: jomayo
 password: Jomayo29200BREST
 
 host: ftp-jomayo.alwaysdata.net
-
 port: default
 
 website URL: https://jomayo.alwaysdata.net/Frontend/
 
 
-# PHPMyAdmin
-   . 
-- create an account on the website
-- import your database
-- link it to your website 
+## Database Administration
 
-### Connection phpMyAdmin
+We chose to administrate our database through PHPMyAdmin
+
+### Connect to phpMyAdmin
 
 account: https://phpmyadmin.alwaysdata.com/
-
 login: jomayo
-
 password: Jomayo29200BREST
+
+## Mail client
+
+We chose to use the SMTP provided with the host and use PHPMailer to manage mail.
+
+### Connexion to SMTP
+
+Check in always data settings that the parameters are correctly set up.
+
+Host : smtp-jomayo.alwaysdata.net
+Port : 465   //The port 587 is also available
+Username : jomayo@alwaysdata.net
+password : jomayo29200!
