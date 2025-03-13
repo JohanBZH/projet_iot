@@ -1,7 +1,8 @@
 <?php
+include '../Backend/functions.php';
 include '../Backend/vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable('/home/jomayo/www/Frontend'); //pour always data /home/jomayo/www/Frontend
+$dotenv = Dotenv\Dotenv::createImmutable('/home/jomayo/www/Frontend');
 $dotenv->load();
 
 $deb = 0;
@@ -9,9 +10,6 @@ $deb = 0;
 $temperature = isset($_GET['temperature']) ? $_GET['temperature'] : null;
 $humidity = isset($_GET['humidity']) ? $_GET['humidity'] : null;
 $time_stamp = date('Y-m-d H:i:s');
-$email = isset($_POST['email']) ? $_POST['email'] : null;
-$password1 = isset($_POST['password1']) ? $_POST['password1'] : null;
-$password2 = isset($_POST['password2']) ? $_POST['password2'] : null;
 
 try {
     $dsn = "mysql:host={$_ENV['MYSQL_HOST']};dbname={$_ENV['MYSQL_DATABASE']};charset=utf8mb4";
@@ -23,7 +21,19 @@ try {
 
     $db = new PDO($dsn, $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $options);
 
-    return $db;
+    if ($temperature !== null && $humidity !== null && is_numeric($temperature) && is_numeric($humidity)) {
+        $floatTemperature = (float)$temperature;
+        $floatHumidity = (float)$humidity;
+
+        $floatTemperature = $floatTemperature/100;
+        $floatHumidity = $floatHumidity/100;
+
+        $stmt = $db->prepare("INSERT INTO Data (Temperature_value, Humidity_value, Time_stamp) VALUES (:temperature, :humidity, :time_stamp)");
+        $stmt->bindParam(':temperature', $floatTemperature);
+        $stmt->bindParam(':humidity', $floatHumidity);
+        $stmt->bindParam(':time_stamp', $time_stamp);
+        $stmt->execute();
+    }
 
 } catch(PDOException $e) {
     error_log("Database error: " . $e->getMessage());

@@ -1,4 +1,7 @@
 <?php
+//Start a session to send data through different files (here data to functions)
+session_start();
+
 include '../Backend/db_conn.php';
 
 $msg="";
@@ -83,8 +86,15 @@ function insertData($time_val, $temperature_val, $humidity_val, $db){
     
 }
 
-// ---------------------------------------------------
+function queryAllData($db){
+    $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp ASC";
+    $result = $db->query($query);
+    return $result->fetchAll(); // Get data in an associative array
+}
 
+// -----------------------------------------------------
+
+// Calculate the average data by batch of 5 rows, with a shift of 1 rows, to smoothen the measures
 function calculateSlidingAverage($data, &$averageTable) {
     $averageSize=5;
     $dataLength = count($data);
@@ -145,6 +155,65 @@ function insertInTable($DataToInsert){
         
 }
 
+// -------------------------------------------------------------------------
+
+//Get the data displayed in data.php
+if ($_SERVER["REQUEST_METHOD"] == "POST"
+    && isset($_POST['export'])){
+
+        $data = $_SESSION['data_to_export'] ?? [];
+        exportData($data);
+        header("Location: ../Frontend/data.php");
+}
+
+//Export the data displayed in data.php in a .csv file.
+function exportData($data){
+
+    //Create the file
+    $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
+    $filepath = '../Docs/Exports/' . $filename;
+    //Check if the repository exists and has the correct permissions
+    if (!file_exists('../Docs/Exports')) {
+        mkdir('../Docs/Exports', 0777, true);
+    }
+
+    //Complete the file
+    $file = fopen($filepath, 'w');
+
+    fputcsv($file, ['Time_stamp', 'Temperature_value', 'Humidity_value']);
+
+    foreach ($data as $row) {
+        fputcsv($file, [
+            $row['Time_stamp'],
+            $row['Temperature_value'],
+            $row['Humidity_value']
+        ]);
+    }
+
+    fclose($file);
+
+    //Force the download
+    header('Content-Type: application/csv');
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    header('Pragma: no-cache');
+    readfile($filepath);
+
+    //Delete the temporary file
+    unlink($filepath);
+
+    exit;
+}
+
+function clearDataExports(){
+
+}
+
+function getLastInsert($db){
+    
+    $query = "SELECT * FROM Data ORDER BY id_data DESC LIMIT 1";
+    $last = $db->query($query);
+    return $last->fetchAll(); // Get data in an associative array
+}
 ?>
 
 

@@ -1,78 +1,60 @@
 <?php
 include '../Backend/functions.php';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="stylesheet" href="style.css">
     <title>Station météo</title>
 </head>
 <body>
-    <header>
-        <div id="header">
-        <h1>Bienvenue sur la micro-station météo du CESI de Brest</h1>
-        <a href="login.php" id="openLogin">LOGIN</a>
+<?php include 'header.php' ?>
+    <div class="container">
+        <div class="center" id="sousmenu">
+            <h1 class="justify">Bienvenue sur le site JOMAYO, la météo du campus de CESI Brest en temps réel !</h1>
         </div>
-    </header>
-    <main>
-        <div id="container weather">
-            <div class="horizontal" >
-                <div class="emoji-container">
-                    <img src="https://emojitool.com/img/google/15.1/15.1-2762.png" alt="" id="snowyemoji" class="emoji">
-                    <!-- <img src="" alt="https://emojitool.com/img/google/15.1/15.1-1446.png"  id="rainyemoji" class="emoji">
-                    <img src="https://emojitool.com/img/google/15.1/15.1-339.png" alt=""  id="sunnyemoji" class="emoji">
-                    <img src="" alt="https://emojitool.com/img/messenger/1.0/cloud-5505.png"  id="cloudyemoji" class="emoji">   -->
+        <div id="center">
+            <div id="content">
+                <div class="superpose">
+                    <img class="img"src="img/thermoBlanc.png">
+                    <span id="temp">
+                        <?php 
+                            $lastGet = getLastInsert($db);
+                            echo $lastGet[0]['Temperature_value'], "°C";
+                        ?>
+                    </span>
                 </div>
-                <h2>Il fait actuellement</h2>
-                <div class="horizontal" id="recentTable">
-                    <table>
-                        <tbody>
-                        <?php
-                            //Save the data averages
-                            $averageTable = [];
-
-                            $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp ASC";
-                            $result = $db->query($query);
-                            $data = $result->fetchAll(); // Get data in an associative array
-
-                            calculateSlidingAverage($data, $averageTable);
-                            insertInTable($averageTable);
-                         
-                            ?>
-                        </tbody>
-                    </table>
+                <div class="superpose">
+                    <img class="img" src="img/goutte.png">
+                    <span id="hum">
+                    <?php 
+                            $lastGet = getLastInsert($db);
+                            echo $lastGet[0]['Humidity_value'],"%";
+                        ?>
+                    </span>
                 </div>
             </div>
         </div>
-
-        <div class="graph">
-            <canvas id="myChart"></canvas>
+        <div class="center">
+            <h2>Heure du dernier relevé :</h2>
         </div>
-
-        <div class="horizontal" >
-            <div id="loginform">
-                <h2>Connectez-vous pour accéder aux données</h2>
-            <form action="account.php" method="POST">
-                <input type="text" name="login" placeholder="Nom d'utilisateur">
-                <input type="text" name="password" placeholder="Mot de passe">
-                <button type="submit" id="signin">Se connecter</button>
-                <button type="submit" id="signup">S'inscrire</button>
-            </form>
+        <div id="heure" class="center">
+            <img class="img" src="img/reveil.png">
+            <span id="time">
+                <?php 
+                    $lastGet = getLastInsert($db);
+                    $time = substr($lastGet[0]['Time_stamp'],11, -3);
+                    echo $time;
+                ?>
+            </span>
         </div>
+        <div class="center">
+            <h2 id="warning" class="justify">Si vous voulez accéder à plus de données, vous devez être connecté !</h2>
         </div>
-    </main>
-    <footer>
-        <a href="https://github.com/JohanBZH/">Johan Mons</a>
-        <a href="https://github.com/MarieEustace">Marie Eustace</a>
-        <a href="https://github.com/yoannmey/">Yoann Meynsan</a>
-    </footer>
-
-
+    </div>
+    <?php include 'footer.php' ?>
     <script src="script.js"></script>
-    
 </body>
 </html>
