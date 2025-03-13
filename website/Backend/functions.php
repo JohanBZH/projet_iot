@@ -3,7 +3,17 @@
 session_start();
 
 include '../Backend/db_conn.php';
-include '../Backend/db_conn.php';
+
+require_once '../Backend/vendor/autoload.php';
+
+//php mailer
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+
+// require_once "vendor/phpmailer/Exception.php";
+// require_once "vendor/phpmailer/PHPmailer.php";
+// require_once "vendor/phpmailer/SMTP.php";
 
 $msg="";
 
@@ -83,8 +93,7 @@ function insertData($time_val, $temperature_val, $humidity_val, $db){
         $stmt->bindParam(':humidity', $floatHumidity);
         $stmt->bindParam(':time_stamp', $time_stamp);
         $stmt->execute();
-    }
-    
+    } 
 }
 
 function queryAllData($db){
@@ -163,12 +172,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"
     && isset($_POST['export'])){
 
         $data = $_SESSION['data_to_export'] ?? [];
-        exportData($data);
+        // exportData($data);
+        downloadData($data);
         header("Location: ../Frontend/data.php");
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST"
+    && isset($_POST['exportMail'])){
+        $data = $_SESSION['data_to_export'] ?? [];
+        sendMail($data);
+        // header("Location: ../Frontend/data.php");
 }
 
 //Export the data displayed in data.php in a .csv file.
-function exportData($data){
+function downloadData($data){
 
     //Create the file
     $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
@@ -199,14 +215,71 @@ function exportData($data){
     header('Pragma: no-cache');
     readfile($filepath);
 
-    //Delete the temporary file
+    // //Delete the temporary file
     unlink($filepath);
 
     exit;
 }
 
-function clearDataExports(){
+function sendMail($data){
 
+$mail = new PHPMailer(true);
+
+try{
+    //Configuration
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER; //infos de débug
+
+    //Simple Mail Tranfer Protocol
+    $mail->isSMTP();
+    $mail->Host = 'localhost'; //For our host on alwaysdata, use "smtp-jomayo.alwaysdata.net"
+    $mail->Port = 1025; //To test on MailHog
+    $mail->SMTPAuth = false;
+
+    //charset
+    $mail->Charset = "utf-8";
+
+    //recipients
+    $mail->addAddress("test@mail.fr"); //ajout d'autant d'adresses que nécessaire
+
+    //sender
+    $mail->setFrom("no-reply@jomayo.fr");
+
+    //content
+    $mail->Subject = "Sujet du message";
+    $mail->Body = "Message";
+
+    //send
+    $mail->send();
+    echo "message envoyé";
+
+}catch (Exception){
+    echo "Mail non envoyé. Erreur: {$mail->ErrorInfo}";
+}
+
+    // //Create the file
+    // $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
+    // $filepath = '../Docs/Exports/' . $filename;
+    // //Check if the repository exists and has the correct permissions
+    // if (!file_exists('../Docs/Exports')) {
+    //     mkdir('../Docs/Exports', 0777, true);
+    // }
+
+    // //Complete the file
+    // $file = fopen($filepath, 'w');
+
+    // fputcsv($file, ['Time_stamp', 'Temperature_value', 'Humidity_value']);
+
+    // foreach ($data as $row) {
+    //     fputcsv($file, [
+    //         $row['Time_stamp'],
+    //         $row['Temperature_value'],
+    //         $row['Humidity_value']
+    //     ]);
+    // }
+
+    // fclose($file);
+
+    // exit;
 }
 
 ?>

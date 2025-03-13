@@ -46,7 +46,10 @@ include '../Backend/functions.php';
                 <!-- Data export -->
                 <div class="dataExport">
                     <form action="../Backend/functions.php" method="POST">
-                        <input type="submit" class="dataExportBtn" name="export" value="Télécharger les données">
+                        <input type="submit" class="dataExportBtn" name="export" value="Télécharger les données en .csv">
+                    </form>
+                    <form action="../Backend/functions.php" method="POST">
+                        <input type="submit" class="dataExportBtn" name="exportMail" value="Envoyer les données par mail">
                     </form>
                 </div>
                 <div class="graph">
