@@ -16,9 +16,8 @@
         <?php 
             if ($_SESSION['loggedIn'] == true) {
                 echo '
-                <form action="logout.php" id="logged">
-                <button id="signOutButton">Déconnexion</button>
-                </form>';
+                <a href="../Backend/logout.php" id="logged">Déconnexion
+                </a>';
             } else {
                 echo '<div id="notLogged">
                 <button id="signInButton">Connexion</button>
@@ -33,7 +32,7 @@
             <button aria-label="close" formnovalidate>X</button>
         </div>
             
-            <form action="create_user.php" method="POST">
+            <form action="../Backend/create_user.php" method="POST">
                 <input type="email" name="email" placeholder="jomayo@winners.fr">
                 <div id="wrongmail"></div>
                 <input type="password" name="password" placeholder="Mot de passe hyper compliqué">
@@ -49,7 +48,7 @@
         <div id="signInclose">
             <button aria-label="close" formnovalidate>X</button>
         </div>
-            <form action="user_check.php" method="POST">
+            <form action="../Backend/user_check.php" method="POST">
                 <input type="email" name="email" id="email" placeholder="jomayo@winners.fr">
                 <div id="wrongmail"></div>
                 <input type="password" name="password" placeholder="Mot de passe hyper compliqué">

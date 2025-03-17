@@ -105,8 +105,10 @@ body {
 }
 
 #logged {
-    display: none;
+    display: flex;
+    text-decoration: none;
     gap: 1rem;
+    margin-right: 1rem;
     justify-content: flex-end;
 }
 
