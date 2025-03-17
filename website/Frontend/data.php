@@ -39,6 +39,9 @@ include '../Backend/functions.php';
             <form action="../Backend/functions.php" method="POST">
                 <input type="submit" id="exportBtn" name="export" value="Télécharger les données">
             </form>
+            <form action="../Backend/functions.php" method="POST">
+                <input type="submit" id="exportBtn" name="exportMail" value="Télécharger les données">
+            </form>
         </div>
         <div class="center">
             <div id="graph">
