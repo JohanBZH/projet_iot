@@ -37,38 +37,87 @@
 // }
 
 
-let background = document.querySelector("#weather");
-let snowyemoji = document.querySelector("#snowyemoji");
-let rainyemoji = document.querySelector("#rainyemoji");
-let sunnyemoji = document.querySelector("#sunnyemoji");
-let cloudyemoji = document.querySelector("#cloudyemoji");
+// let background = document.querySelector("#weather");
+// let snowyemoji = document.querySelector("#snowyemoji");
+// let rainyemoji = document.querySelector("#rainyemoji");
+// let sunnyemoji = document.querySelector("#sunnyemoji");
+// let cloudyemoji = document.querySelector("#cloudyemoji");
 
-// let temperature = ;
-// let humidity = ;
+// // let temperature = ;
+// // let humidity = ;
 
-const TODAY = new Date();
-let currentTime = TODAY.getHours();
+// const TODAY = new Date();
+// let currentTime = TODAY.getHours();
 
-let wrongmail = document.querySelector("#wrongmail");
+// let wrongmail = document.querySelector("#wrongmail");
 
-// Function to validate email format
-function validateEmail(email) {
-var pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-return pattern.test(email);
-}
-// Example usage
-document.getElementById("mail").addEventListener("input", function() {
-var email = this.value;
-if (validateEmail(email)) {
-console.log("Valid email address.");
-} else {
-console.log("Invalid email address.");
-let wrongelem = document.createElement('span');
-wrongelem.innerHTML = "Adresse invalide";
-wrongmail.appendChild(wrongelem);
-}
-});
+// // Function to validate email format
+// function validateEmail(email) {
+// var pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+// return pattern.test(email);
+// }
+// // Example usage
+// document.getElementById("mail").addEventListener("input", function() {
+// var email = this.value;
+// if (validateEmail(email)) {
+// console.log("Valid email address.");
+// } else {
+// console.log("Invalid email address.");
+// let wrongelem = document.createElement('span');
+// wrongelem.innerHTML = "Adresse invalide";
+// wrongmail.appendChild(wrongelem);
+// }
+// });
 
+
+// function openSignInModal(evt) {
+//     evt.srcElement.classList.remove("hidden");
+// }
+
+// function openSignUpModal(evt) {
+//     evt.srcElement.classList.remove("hidden");
+// }
+
+// const signInButton = document.getElementById("signInButton");
+// const signUpButton = document.getElementById("signUpButton");
+// const signIncloseButton = document.getElementById("signInclose");
+// const signUpcloseButton = document.getElementById("signUpclose");
+// const signInDialog = document.getElementById("signInDialog");
+// const signUpDialog = document.getElementById("signUpDialog");
+
+// document.querySelector("signInButton").addEventListener('click', openSignInModal);
+// document.querySelector("signUpButton").addEventListener('click', openSignUpModal);
+
+// document.querySelector("signInclose").addEventListener('click', closeSignInModal);
+// document.querySelector("signUpclose").addEventListener('click', closeSignUpModal);
+
+
+// function openSignInModal() {
+//     signInDialog.showModal();
+//     console.log("clicked on Sign in");
+//   };
+
+// function openSignUpModal() {
+//     signUpDialog.showModal();
+//     console.log("clicked on Sign up");
+// };
+  
+// function closeSignInModal() {
+//     signInDialog.close();
+//     console.log("closed the modal");
+// };
+
+// function closeSignUpModal() {
+//     signUpDialog.close();
+//     console.log("closed the modal");
+// };
+
+const test = document.querySelector("test");
+const testbutton = document.querySelector("testbutton");
+testbutton.addEventListener("click", () => {
+    test.showModal();
+    console.log("clicked on Sign up");
+})
 
 // nightOrDay();
 // weatherForecast();

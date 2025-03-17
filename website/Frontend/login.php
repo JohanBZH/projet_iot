@@ -13,19 +13,20 @@ include '../Backend/functions.php';
 <body>
 <?php include 'header.php' ?>
         <div id="header">
-        <h1>Créer votre compte pour accéder aux données</h1>
+        <h1>Connectez-vous pour accéder aux données</h1>
     </div>
     <main>
         <div class="horizontal" >
             <div id="loginform">
                 
-            <form action="create_user.php" method="POST">
-                <input type="email" name="email" placeholder="jomayo@winners.fr">
+            <form action="user_check.php" method="POST">
+                <input type="email" name="email" id="email" placeholder="jomayo@winners.fr">
                 <div id="wrongmail"></div>
                 <input type="password" name="password" placeholder="Mot de passe hyper compliqué">
-                <input type="password" name="passwordcheck" placeholder="Confirmez le mot de passe">
-                <button type="submit" id="signup">Créer mon compte</button>
+                <button type="submit" id="signup">Se connecter</button>
             </form>
+            <a href="account.php">S'inscrire</a>
+         
             </div>
         </div>
     </main>
