@@ -67,8 +67,7 @@ $msg = "";
 
 // connecting to your account allows you access to the graph and data table
     if ($msg == "") {
-        // header("Location: data.php?email=".$email . "&msg=".$msg); 
-        echo "ça marche";
+        header("Location: data.php?email=".$email . "&msg=".$msg); 
         echo $stmt;
         echo $email;
         exit();
