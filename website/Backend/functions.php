@@ -155,7 +155,6 @@ function downloadData($data){
 }
 
 function sendMail($data){
-
         //Create the file
     $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
     $filepath = '../Docs/Exports/' . $filename;
@@ -211,9 +210,9 @@ function sendMail($data){
 
         //charset
         $mail->Charset = "utf-8";
-
+        
         //recipients
-        $mail->addAddress("trscl.29@gmail.com"); //ajout d'autant d'adresses que nécessaire
+        $mail->addAddress($_SESSION['login']); //ajout d'autant d'adresses que nécessaire
 
         //sender
         $mail->setFrom("no-reply@jomayo.fr");

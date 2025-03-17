@@ -8,16 +8,12 @@
             <a href="index.php" id="title">Station météo</a>
         </div>
         <div id="notLogged">
-            <button id="signInButton">Connexion</button>
-            <button id="signUpButton">Inscription</button>
             <a href="login.php">Connexion</button>
             <a href="account.php">Inscription</button>
         </div>
         <div id="logged">
-            <a href="login.php" id="logout">Déconnexion</a>
+            <a href="logout.php" id="logout">Déconnexion</a>
         </div>
-        <button id="testbutton">Test</button>
-        <dialog id="test">Test</dialog>
 
         <!-- <dialog id="signUpDialog">
         <div class="signInOrUpform">
