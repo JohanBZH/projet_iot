@@ -331,6 +331,22 @@ dialog {
     border-radius: 5px;
 }
 
+#formPwd {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 0.5rem;
+    padding-left: 1rem;
+}
+
+#formPwd input{
+    width: 15rem;
+    height: auto;
+}
+
+#formPwd button{
+    width: 5rem;
+    height: auto;
+}
 
 @media (max-width: 500px) {
    

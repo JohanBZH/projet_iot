@@ -19,7 +19,7 @@ include '../Backend/functions.php';
         <div class="horizontal" >
             <div id="loginform">
                 
-            <form action="user_check.php" method="POST">
+            <form action="../Backend/user_check.php" method="POST">
                 <input type="email" name="email" id="email" placeholder="jomayo@winners.fr">
                 <div id="wrongmail"></div>
                 <input type="password" name="password" placeholder="Mot de passe hyper compliqué">

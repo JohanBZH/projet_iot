@@ -1,5 +1,6 @@
 <?php
-// PAGE TO SIGN UP
+// PAGE TO SIGN IN
+session_start();
 
 include '../Backend/db_conn.php';
 
@@ -10,13 +11,13 @@ $msg = "";
 // checks address is not null when sent
     if ($_SERVER["REQUEST_METHOD"] != "POST"){ 
         $msg = "Error.";
-        header("Location: error.php?msg=".$msg); 
+        header("Location: ../Frontend/error.php?msg=".$msg); 
         exit();
     }
     
     if (empty($_POST['email'])) { 
         $msg = "Don't forget the email.";
-        header("Location: error.php?msg=".$msg); 
+        header("Location: ../Frontend/error.php?msg=".$msg); 
         exit();
     }
 
@@ -26,7 +27,7 @@ $msg = "";
 // checks if email address is valid
     if($email == false) { 
         $msg = "Invalid email address.";
-        header("Location: error.php?msg=".$msg); 
+        header("Location: ../Frontend/error.php?msg=".$msg); 
         exit();
     }
 
@@ -35,7 +36,7 @@ $msg = "";
 // checks password is not null
     if (empty($_POST['password'])){ 
         $msg = "Don't forget the password.";
-        header("Location: error.php?msg=".$msg); 
+        header("Location: ../Frontend/error.php?msg=".$msg); 
         exit();
     }
 
@@ -48,24 +49,26 @@ $msg = "";
         if ($user["Password"] != null) {
 // /!\ password_verify will only work if you set set the max var char length to > 200 !!!!!!!!!!!!!!!!!!!!!!!
             if (password_verify($password, $user["Password"])){
-                header("Location: data.php?email=".$email . "&msg=".$msg); 
+                $_SESSION['login'] = $user['Login'];
+                $_SESSION['loggedIn'] = true;
+                header("Location: ../Frontend/data.php?email=".$email . "&msg=".$msg); 
                 exit();
             } 
             else {
                 $msg = "Wrong email and password combination";
-                header("Location: error.php?msg=".$msg); 
+                header("Location: ../Frontend/error.php?msg=".$msg); 
                 exit();
             }
         }
     }
 
     $msg = "Email not found";
-    header("Location: error.php?msg=".$msg);
+    header("Location: ../Frontend/error.php?msg=".$msg);
     exit();
 
 // connecting to your account allows you access to the graph and data table
     if ($msg == "") {
-        // // header("Location: data.php?email=".$email . "&msg=".$msg); 
+        // // header("Location: ../Frontend/data.php?email=".$email . "&msg=".$msg); 
         // echo "ça marche";
         // echo $stmt;
         // echo $email;
@@ -73,7 +76,7 @@ $msg = "";
     }
 
     if ($msg !== "") {
-        // header("Location: error.php?msg=".$msg); 
+        // header("Location: ../Frontend/error.php?msg=".$msg); 
     }
 
 
