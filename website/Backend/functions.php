@@ -2,6 +2,10 @@
 //Start a session to send data through different files (here data to functions)
 session_start();
 
+if (!isset($_SESSION['loggedIn'])) {
+    $_SESSION['loggedIn'] = false;
+}
+
 include '../Backend/db_conn.php';
 
 //php mailer
@@ -118,17 +122,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"
 
 //Export the data displayed in data.php in a .csv file.
 function downloadData($data){
+    //Use tmp 
+    $exportDir = sys_get_temp_dir() . '/';
 
     //Create the file
     $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
-    $filepath = '../Docs/Exports/' . $filename;
-    //Check if the repository exists and has the correct permissions
-    if (!file_exists('../Docs/Exports')) {
-        mkdir('../Docs/Exports', 0777, true);
-    }
+    $filepath = $exportDir . $filename;
 
     //Complete the file
     $file = fopen($filepath, 'w');
+
+    //check if file opens
+    if ($file === false) {
+        die("Impossible de créer le fichier CSV. Vérifiez les permissions.");
+    }
 
     fputcsv($file, ['Time_stamp', 'Temperature_value', 'Humidity_value']);
 
@@ -155,16 +162,21 @@ function downloadData($data){
 }
 
 function sendMail($data){
-        //Create the file
+
+    //Use tmp 
+    $exportDir = sys_get_temp_dir() . '/';
+
+    //Create the file
     $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
-    $filepath = '../Docs/Exports/' . $filename;
-    //Check if the repository exists and has the correct permissions
-    if (!file_exists('../Docs/Exports')) {
-        mkdir('../Docs/Exports', 0777, true);
-    }
+    $filepath = $exportDir . $filename;
 
     //Complete the file
     $file = fopen($filepath, 'w');
+
+    //check if file opens
+    if ($file === false) {
+        die("Impossible de créer le fichier CSV. Vérifiez les permissions.");
+    }
 
     fputcsv($file, ['Time_stamp', 'Temperature_value', 'Humidity_value']);
 
