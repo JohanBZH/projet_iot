@@ -1,28 +1,38 @@
 <header>
     <div id="header">
         <div id="left">
-            <a href="profile.php" id="profil">Profil</a>
-            <a href="data.php" id="hist">Historique</a>
+            <?php 
+            if ($_SESSION['loggedIn'] == true) {
+                echo '<a href="profile.php" id="profil">Profil</a>
+            <a href="data.php" id="hist">Historique</a>';
+            }  
+            ?>
+
         </div>
         <div id="titleContainer">
             <a href="index.php" id="title">Station météo</a>
         </div>
-        <div id="notLogged">
-            <button id="signInButton">Connexion</button>
-            <button id="signUpButton">Inscription</button>
-            <a href="login.php">Connexion</button>
-            <a href="account.php">Inscription</button>
-        </div>
-        <div id="logged">
-            <a href="login.php" id="logout">Déconnexion</a>
-        </div>
-        <button id="testbutton">Test</button>
-        <dialog id="test">Test</dialog>
 
-        <!-- <dialog id="signUpDialog">
+        <?php 
+            if ($_SESSION['loggedIn'] == true) {
+                echo '
+                <a href="../Backend/logout.php" id="logged">Déconnexion
+                </a>';
+            } else {
+                echo '<div id="notLogged">
+                <button id="signInButton">Connexion</button>
+                <button id="signUpButton">Inscription</button>
+                </div>';
+            }
+        ?>
+        <dialog id="signUpDialog">
         <div class="signInOrUpform">
-            <button id="signUpclose" aria-label="close" formnovalidate>X</button>
-            <form action="create_user.php" method="POST">
+
+        <div id="signUpclose">
+            <button aria-label="close" formnovalidate>X</button>
+        </div>
+            
+            <form action="../Backend/create_user.php" method="POST">
                 <input type="email" name="email" placeholder="jomayo@winners.fr">
                 <div id="wrongmail"></div>
                 <input type="password" name="password" placeholder="Mot de passe hyper compliqué">
@@ -35,8 +45,10 @@
 
         <dialog id="signInDialog">
         <div class="signInOrUpform">
-            <button id="signInclose" aria-label="close" formnovalidate>X</button>
-            <form action="user_check.php" method="POST">
+        <div id="signInclose">
+            <button aria-label="close" formnovalidate>X</button>
+        </div>
+            <form action="../Backend/user_check.php" method="POST">
                 <input type="email" name="email" id="email" placeholder="jomayo@winners.fr">
                 <div id="wrongmail"></div>
                 <input type="password" name="password" placeholder="Mot de passe hyper compliqué">
@@ -44,6 +56,8 @@
             </form>
             
         </div>
-        </dialog> -->
+        </dialog>
+
+
     </div>
 </header>
