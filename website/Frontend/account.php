@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 include '../Backend/functions.php';
 
 ?>
@@ -11,32 +11,26 @@ include '../Backend/functions.php';
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
+<?php include 'header.php' ?>
         <div id="header">
         <h1>Créer votre compte pour accéder aux données</h1>
     </div>
-    </header>
     <main>
         <div class="horizontal" >
             <div id="loginform">
                 
-            <form action="data.php" method="POST">
+            <form action="create_user.php" method="POST">
                 <input type="email" name="email" placeholder="jomayo@winners.fr">
                 <div id="wrongmail"></div>
-                <input type="text" name="password1" placeholder="Mot de passe hyper compliqué">
-                <input type="text" name="password2" placeholder="Confirmez le mot de passe">
+                <input type="password" name="password" placeholder="Mot de passe hyper compliqué">
+                <input type="password" name="passwordcheck" placeholder="Confirmez le mot de passe">
                 <button type="submit" id="signup">Créer mon compte</button>
             </form>
             </div>
         </div>
     </main>
     
-    <footer>
-        <a href="https://github.com/JohanBZH/">Johan Mons</a>
-        <a href="https://github.com/MarieEustace">Marie Eustace</a>
-        <a href="https://github.com/yoannmey/">Yoann Meynsan</a>
-
-        <script src="script.js"></script>
-    </footer>
+    <?php include 'footer.php' ?>
+    <script src="script.js"></script>
 </body>
-</html>
+</html> -->

@@ -1,8 +1,9 @@
 <?php
+// PAGE TO SIGN IN
 
 include '../Backend/db_conn.php';
 
-$msg="";
+$msg = "";
 
 // checks email address
 
@@ -45,7 +46,7 @@ $msg="";
         exit();
     } 
 
-    // checks the table for an existing identical email address
+// checks the table for an existing identical email address
     $stmt = $db->prepare("SELECT COUNT(*) AS cnt FROM App_user WHERE Login = :llogin");
     $stmt->bindParam(':llogin',$email);
     $stmt->execute();
@@ -57,7 +58,7 @@ $msg="";
         exit();
     } 
 
-    // insert new user into table
+// inserts new user into table
     echo "Valid email address.";
     $stmt = $db->prepare("INSERT INTO App_user (Login, Password) VALUES (:llogin, :ppassword)");
     $stmt->bindParam(':llogin',$email);

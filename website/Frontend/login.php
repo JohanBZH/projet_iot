@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 include '../Backend/functions.php';
 
 ?>
@@ -11,11 +11,10 @@ include '../Backend/functions.php';
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
+<?php include 'header.php' ?>
         <div id="header">
         <h1>Connectez-vous pour accéder aux données</h1>
     </div>
-    </header>
     <main>
         <div class="horizontal" >
             <div id="loginform">
@@ -32,12 +31,7 @@ include '../Backend/functions.php';
         </div>
     </main>
     
-    <footer>
-        <a href="https://github.com/JohanBZH/">Johan Mons</a>
-        <a href="https://github.com/MarieEustace">Marie Eustace</a>
-        <a href="https://github.com/yoannmey/">Yoann Meynsan</a>
-
-        <script src="script.js"></script>
-    </footer>
+    <?php include 'footer.php' ?>
+    <script src="script.js"></script>
 </body>
-</html>
+</html> -->

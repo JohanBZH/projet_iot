@@ -1,4 +1,5 @@
 <?php
+// PAGE TO SIGN UP
 
 include '../Backend/db_conn.php';
 
@@ -39,46 +40,40 @@ $msg = "";
     }
 
 // checks the table for an existing identical email address
-    $stmt = $db->prepare("SELECT COUNT(*) as cnt FROM App_user WHERE Login = :llogin AND Password = :ppassword");
+    $stmt = $db->prepare("SELECT * FROM App_user WHERE Login = :llogin");
     $stmt->bindParam(':llogin',$email);
-    $stmt->bindParam(':ppassword',$password);
     $stmt->execute();
-var_dump($stmt['cnt']);
-    if ($stmt["cnt"] != 0) {
-        $msg = "Wrong email and password combination";
-        echo $msg;
-        // header("Location: error.php?msg=".$msg); 
-        exit();
+
+    foreach ($stmt as $user) {
+        if ($user["Password"] != null) {
+// /!\ password_verify will only work if you set set the max var char length to > 200 !!!!!!!!!!!!!!!!!!!!!!!
+            if (password_verify($password, $user["Password"])){
+                header("Location: data.php?email=".$email . "&msg=".$msg); 
+                exit();
+            } 
+            else {
+                $msg = "Wrong email and password combination";
+                header("Location: error.php?msg=".$msg); 
+                exit();
+            }
+        }
     }
 
-    // foreach ($stmt as $user){
-    //     echo json_encode($user);
-    //     if ($stmt["Password"] != $password){ // checks password is right
-    //         $msg = "Wrong email and password combination";
-    //         echo $msg;
-    //         // header("Location: error.php?msg=".$msg); 
-    //         exit();
-    //     } 
-
-    //     if ($stmt["Password"] == $password){ // checks password is right
-    //         echo "ça marche";
-    //         echo $stmt;
-    //         echo $email;
-    //         exit();
-    //     } 
-    // }
+    $msg = "Email not found";
+    header("Location: error.php?msg=".$msg);
+    exit();
 
 // connecting to your account allows you access to the graph and data table
     if ($msg == "") {
-        // header("Location: data.php?email=".$email . "&msg=".$msg); 
-        echo "ça marche";
-        echo $stmt;
-        echo $email;
-        exit();
+        // // header("Location: data.php?email=".$email . "&msg=".$msg); 
+        // echo "ça marche";
+        // echo $stmt;
+        // echo $email;
+        // exit();
     }
 
     if ($msg !== "") {
-        header("Location: error.php?msg=".$msg); 
+        // header("Location: error.php?msg=".$msg); 
     }
 
 
