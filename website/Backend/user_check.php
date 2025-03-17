@@ -47,7 +47,7 @@ $msg = "";
 
     foreach ($stmt as $user) {
         if ($user["Password"] != null) {
-// /!\ password_verify will only work if you set set the max var char length to > 200 !!!!!!!!!!!!!!!!!!!!!!!
+// /!\ password_verify will only work if you set set the max var char length to > 200
             if (password_verify($password, $user["Password"])){
                 $_SESSION['login'] = $user['Login'];
                 $_SESSION['loggedIn'] = true;
@@ -78,6 +78,3 @@ $msg = "";
     if ($msg !== "") {
         // header("Location: ../Frontend/error.php?msg=".$msg); 
     }
-
-
-

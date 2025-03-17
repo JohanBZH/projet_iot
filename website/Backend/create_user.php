@@ -68,8 +68,12 @@ $msg = "";
 
 // connecting to your account allows you access to the graph and data table
     if ($msg == "") {
+<<<<<<< HEAD
         // header("Location: ../Frontend/data.php?email=".$email . "&msg=".$msg); 
         echo "ça marche";
+=======
+        header("Location: data.php?email=".$email . "&msg=".$msg); 
+>>>>>>> 81db8ee7245855519a15d360b62e4ca590cdfbcc
         echo $stmt;
         echo $email;
         exit();
