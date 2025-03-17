@@ -10,6 +10,8 @@
         <div id="notLogged">
             <button id="signInButton">Connexion</button>
             <button id="signUpButton">Inscription</button>
+            <a href="login.php">Connexion</button>
+            <ba href="account.php">Inscription</button>
         </div>
         <div id="logged">
             <a href="login.php" id="logout">Déconnexion</a>

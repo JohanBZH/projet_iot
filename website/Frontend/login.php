@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 include '../Backend/functions.php';
 
 ?>
@@ -34,4 +34,4 @@ include '../Backend/functions.php';
     <?php include 'footer.php' ?>
     <script src="script.js"></script>
 </body>
-</html> -->
+</html>
