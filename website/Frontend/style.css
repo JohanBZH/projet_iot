@@ -166,7 +166,7 @@ h1, h2, h3, a {
     position: absolute;
     z-index: 3;
     font-size: 1.2rem;
-    color: white;
+    color: #162633;
     font-family: 'Font';
     align-self: flex-end;
     margin-left: 1.6rem;
@@ -177,7 +177,7 @@ h1, h2, h3, a {
     position: absolute;
     z-index: 3;
     font-size: 2.0rem;
-    color: white;
+    color: #162633;
     font-family: 'Font';
     align-self: center;
     margin-left: 2.5rem;
@@ -190,18 +190,17 @@ h1, h2, h3, a {
 
 #heure {
     position: relative;
-    
 }
 
 #heure img {
     max-height:auto;
-    width: 600px;
+    width: 450px;
 }
 
 #heure span {
     position: absolute;
     z-index: 2;
-    font-size: 7rem;
+    font-size: 5rem;
     color: white;
     font-family: 'digital';
 }
