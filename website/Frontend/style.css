@@ -34,6 +34,10 @@ body {
     transition: all 0.3s ease;
 }
 
+#exportBtn  {
+    gap: 4vw;
+}
+
 #signUpButton:hover, #signInButton:hover, #exportBtn:hover {
     transform: scale(1.1);
 }
@@ -331,7 +335,7 @@ td {
 dialog {
     padding-top: 5%;
     position: relative;
-    width: 30%;
+    width: 30vw;
     border: solid 1px black;
     box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.5);
 }
@@ -340,6 +344,7 @@ dialog input {
     margin: 5%;
     display: flex;
     justify-content: center;
+    width: 80%;
 }
 
 dialog button {
