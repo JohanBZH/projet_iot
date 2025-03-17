@@ -10,7 +10,7 @@ include '../Backend/functions.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
-    <title>Station météo</title>
+    <title>Historique</title>
 </head>
 <body>
     <?php include 'header.php' ?>
@@ -18,32 +18,31 @@ include '../Backend/functions.php';
         <div class="center" >
             <h2>Affichage live</h2>
         </div>
-        <div class="center" id="tab">
-                <?php
-                    //Get all the data
-                    $averageTable = [];
-                    $data = queryAllData($db);
+        <div class="center">
+            <div id="tab">
+                    <?php
+                        //Get all the data
+                        $averageTable = [];
+                        $data = queryAllData($db);
 
-                    //Calculate by batches of 5 data set the average to smoothen the datas
-                    calculateSlidingAverage($data, $averageTable);
-                    insertInTable($averageTable);
+                        //Calculate by batches of 5 data set the average to smoothen the datas
+                        calculateSlidingAverage($data, $averageTable);
+                        insertInTable($averageTable);
 
-                            //Save the data in the session opened in functions.php
-                            $_SESSION['data_to_export'] = $data;
-                            ?>
-                </div>
-                <!-- Data export -->
-                <div class="dataExport">
-                    <form action="../Backend/functions.php" method="POST">
-                        <input type="submit" class="dataExportBtn" name="export" value="Télécharger les données en .csv">
-                    </form>
-                    <form action="../Backend/functions.php" method="POST">
-                        <input type="submit" class="dataExportBtn" name="exportMail" value="Envoyer les données par mail">
-                    </form>
-                </div>
-                <div id="graph" class="center">
-                    <canvas id="myChart"></canvas>
-                </div>
+                        //Save the data in the session opened in functions.php
+                        $_SESSION['data_to_export'] = $data;
+                        ?>
+            </div>
+        </div>
+        <!-- Data export -->
+        <div class="center">
+            <form action="../Backend/functions.php" method="POST">
+                <input type="submit" id="exportBtn" name="export" value="Télécharger les données">
+            </form>
+        </div>
+        <div class="center">
+            <div id="graph">
+                <canvas id="myChart"></canvas>
             </div>
         </div>
     </div>
