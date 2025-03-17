@@ -1,7 +1,7 @@
 <header>
     <div id="header">
         <div id="left">
-            <a href="login.php" id="profil">Profil</a>
+            <a href="profile.php" id="profil">Profil</a>
             <a href="data.php" id="hist">Historique</a>
         </div>
         <div id="titleContainer">
