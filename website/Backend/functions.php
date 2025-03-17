@@ -304,6 +304,13 @@ function sendMail($data){
     }
 }
 
+function getLastInsert($db){
+    
+    $query = "SELECT * FROM Data ORDER BY id_data DESC LIMIT 1";
+    $last = $db->query($query);
+    return $last->fetchAll(); // Get data in an associative array
+}
+?>
 
     
    
