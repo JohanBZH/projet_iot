@@ -412,12 +412,11 @@ dialog button {
     }
 
     #titleContainer {
-        grid-column-start: 1;
-        grid-column-end: 1;
         grid-row-start: 1;
         grid-row-end: 1;
-        justify-content: flex-start;
+        justify-content: center;
         margin-left: 1rem;
+        grid-column: span 2;
     }
 
     #titleContainer a{
@@ -430,6 +429,7 @@ dialog button {
         grid-row-start: 3;
         grid-row-end: 3;
         margin-left: 1rem;
+        display: initial;
     }
 
     #notLogged{
