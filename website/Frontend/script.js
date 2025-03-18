@@ -1,3 +1,5 @@
+// create constants for every sign in and sign up modal elements
+
 const signInButton = document.getElementById("signInButton").addEventListener('click', openSignInModal);
 const signUpButton = document.getElementById("signUpButton").addEventListener('click', openSignUpModal);
 
@@ -7,7 +9,7 @@ const signUpclose = document.getElementById("signUpclose").addEventListener('cli
 const signInDialog = document.getElementById("signInDialog");
 const signUpDialog = document.getElementById("signUpDialog");
 
-
+// opens and closes modals using the dialog HTML element
 function openSignInModal() {
     signInDialog.showModal();
     console.log("clicked on Sign in");
@@ -29,3 +31,18 @@ function closeSignUpModal() {
 };
 
 
+const rect1 = new fabric.Rect({
+    left: 100,
+    top: 100,
+    fill: 'red',
+    width: 20,
+    height: 20
+});
+
+rect1.animate(
+    'left',
+    '+=100',
+    {
+        onChange: canvas.renderAll(canvas)
+    }
+);

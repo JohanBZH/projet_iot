@@ -163,7 +163,7 @@ We chose to use the SMTP provided with the host and use PHPMailer to manage mail
 
 ### Connexion to SMTP
 
-Check in always data settings that the parameters are correctly set up.
+Checks in always-data settings that the parameters are correctly set up.
 
 Host : smtp-jomayo.alwaysdata.net
 Port : 465   //The port 587 is also available
@@ -172,7 +172,7 @@ password : jomayo29200!
 
 ## Server administration
 
-Check in always data settings that the SSH parameters are correctly set up :
+Checks in always-data settings that the SSH parameters are correctly set up :
     You have a SSH user, with a password and "Password connection" is ticked.
 
 To connect from the client :
