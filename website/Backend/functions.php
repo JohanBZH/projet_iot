@@ -41,7 +41,7 @@ function queryAllData($db){
 
 // -----------------------------------------------------
 
-// Calculate the average data by batch of 5 rows, with a shift of 1 rows, to smoothen the measures
+// Calculate the average data by batch of 5 rows, with a shift of 1 row every time to smoothen the measures
 function calculateSlidingAverage($data, &$averageTable) {
     $averageSize=5;
     $dataLength = count($data);
@@ -49,28 +49,28 @@ function calculateSlidingAverage($data, &$averageTable) {
     // Check for data availability
     if ($dataLength >= $averageSize) {
         
-    for($i = 0; $i <= ($dataLength-$averageSize); $i++){
+        for($i = 0; $i <= ($dataLength-$averageSize); $i++){
 
-        // Get the last five datas
-        $lastFiveData = array_slice($data, $i, $averageSize);
+            // Get the last five rows of data
+            $lastFiveData = array_slice($data, $i, $averageSize);
 
-        // Calculate average
-        $temperatureColumn = array_column($lastFiveData, 'Temperature_value');
-        $temperatureAverage = round(array_sum($temperatureColumn) / $averageSize, 2);
+            // Calculate average
+            $temperatureColumn = array_column($lastFiveData, 'Temperature_value');
+            $temperatureAverage = round(array_sum($temperatureColumn) / $averageSize, 2);
 
-        $humidityColumn = array_column($lastFiveData, 'Humidity_value');
-        $humidityAverage = round(array_sum($humidityColumn) / $averageSize, 2);
+            $humidityColumn = array_column($lastFiveData, 'Humidity_value');
+            $humidityAverage = round(array_sum($humidityColumn) / $averageSize, 2);
 
-        // Get unique timestamp for each 5 datas
-        $lastTimestamp = $lastFiveData[0]['Time_stamp'];
+            // Get unique timestamp for each batch
+            $lastTimestamp = $lastFiveData[0]['Time_stamp'];
 
-        // Add datas to an array
-        $averageTable[] = [
-            'time' => $lastTimestamp,
-            'temperature' => $temperatureAverage,
-            'humidite' => $humidityAverage
-        ];
-        }    
+            // Add data to an array
+            $averageTable[] = [
+                'time' => $lastTimestamp,
+                'temperature' => $temperatureAverage,
+                'humidite' => $humidityAverage
+            ];
+            }    
 
         // Print table
         
@@ -80,6 +80,7 @@ function calculateSlidingAverage($data, &$averageTable) {
     return false;
 }
 
+// Display the data in HTML if it is available
 function insertInTable($DataToInsert){
 
     if (!empty($DataToInsert)) {
@@ -104,7 +105,9 @@ function insertInTable($DataToInsert){
 
 // -------------------------------------------------------------------------
 
-//Get the data displayed in data.php
+// Save the data and allow you to download it or send it to an email address
+
+// Get the data displayed in data.php
 if ($_SERVER["REQUEST_METHOD"] == "POST"
     && isset($_POST['export'])){
 
@@ -120,19 +123,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"
         // header("Location: ../Frontend/data.php");
 }
 
-//Export the data displayed in data.php in a .csv file.
+// Export the data displayed in data.php in a .csv file.
 function downloadData($data){
-    //Use tmp 
+    // Use tmp 
     $exportDir = sys_get_temp_dir() . '/';
 
-    //Create the file
+    // Create the file
     $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
     $filepath = $exportDir . $filename;
 
-    //Complete the file
+    // Complete the file
     $file = fopen($filepath, 'w');
 
-    //check if file opens
+    // Check if file opens
     if ($file === false) {
         die("Impossible de créer le fichier CSV. Vérifiez les permissions.");
     }
@@ -149,13 +152,13 @@ function downloadData($data){
 
     fclose($file);
 
-    //Force the download
+    // Force the download
     header('Content-Type: application/csv');
     header('Content-Disposition: attachment; filename="' . $filename . '"');
     header('Pragma: no-cache');
     readfile($filepath);
 
-    // //Delete the temporary file
+    // Delete the temporary file
     unlink($filepath);
 
     exit;
@@ -163,17 +166,17 @@ function downloadData($data){
 
 function sendMail($data){
 
-    //Use tmp 
+    // Use tmp 
     $exportDir = sys_get_temp_dir() . '/';
 
-    //Create the file
+    // Create the file
     $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
     $filepath = $exportDir . $filename;
 
-    //Complete the file
+    // Complete the file
     $file = fopen($filepath, 'w');
 
-    //check if file opens
+    // Check if file opens
     if ($file === false) {
         die("Impossible de créer le fichier CSV. Vérifiez les permissions.");
     }
@@ -201,7 +204,7 @@ function sendMail($data){
         //Simple Mail Tranfer Protocol
         $mail->isSMTP();
         $mail->Host = 'smtp-jomayo.alwaysdata.net'; //For our host on alwaysdata, use "smtp-jomayo.alwaysdata.net" //for local testing : 'localhost'
-        $mail->Port = 465; //Ou 587 //To test on MailHog 1025
+        $mail->Port = 465; //Or 587 //To test on MailHog 1025
         
         //Dans le cas d'une connexion via MailHog
         //$mail->SMTPAuth = false;

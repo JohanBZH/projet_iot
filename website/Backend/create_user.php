@@ -5,9 +5,9 @@ include '../Backend/db_conn.php';
 
 $msg = "";
 
-// checks email address
+// check email address
 
-// checks address is not null when sent
+// check address is not null when sent
     if ($_SERVER["REQUEST_METHOD"] != "POST"){ 
         $msg = "Error.";
         header("Location: ../Frontend/error.php?msg=".$msg); 
@@ -23,7 +23,7 @@ $msg = "";
     $email_ToFilter = $_POST['email'];
     $email = filter_var($email_ToFilter, FILTER_VALIDATE_EMAIL);
 
-// checks if email address is valid
+// check if email address is valid
     if($email == false) { 
         $msg = "Invalid email address.";
         header("Location: ../Frontend/error.php?msg=".$msg); 
@@ -33,7 +33,7 @@ $msg = "";
     $password = $_POST['password'];
     $passwordcheck = $_POST['passwordcheck'];
 
-// checks password is not null
+// checkspassword is not null
     if (empty($_POST['password']) || empty($_POST['passwordcheck'])){ 
         $msg = "Don't forget the password.";
         header("Location: ../Frontend/error.php?msg=".$msg); 
@@ -46,7 +46,7 @@ $msg = "";
         exit();
     } 
 
-// checks the table for an existing identical email address
+// check the table for an existing identical email address
     $stmt = $db->prepare("SELECT COUNT(*) AS cnt FROM App_user WHERE Login = :llogin");
     $stmt->bindParam(':llogin',$email);
     $stmt->execute();
@@ -57,9 +57,9 @@ $msg = "";
         header("Location: ../Frontend/error.php?msg=".$msg); 
         exit();
     } 
-// Hashing the password
+// hash the password
     $passowrd = password_hash($password, PASSWORD_DEFAULT);  
-// inserts new user into table
+// insert new user into table
     echo "Valid email address.";
     $stmt = $db->prepare("INSERT INTO App_user (Login, Password) VALUES (:llogin, :ppassword)");
     $stmt->bindParam(':llogin',$email);
