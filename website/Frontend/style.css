@@ -146,13 +146,18 @@ h1, h2, h3, a {
     border-radius: 1rem;
     width: 60%;
     height: 50vh;
+    max-height: 370px;
+    min-height: 240px;
+    padding-bottom: 1rem;
 }
 
 .img {
     position: relative;
     z-index: 2;
     display: flex;
-    max-height:300px;
+    justify-content: center;
+    align-content: center;
+    height: 100%;
     width: auto;
 }
 
@@ -160,56 +165,55 @@ h1, h2, h3, a {
     display: flex;
     flex-flow: row;
     justify-content: center;
+    width: 100%;
 }
 
 #temp {
     position: absolute;
     z-index: 3;
-    font-size: 1.2rem;
-    color: #162633;
+    font-size: clamp(0.8rem, 3vh, 1.2rem);
+    
+    color: #ffffff;
     font-family: 'Font';
-    align-self: flex-end;
-    margin-left: 1.6rem;
-    margin-bottom: 4.5rem;
+    bottom: 13%;
 }
 
 #hum {
     position: absolute;
     z-index: 3;
-    font-size: 2.0rem;
-    color: #162633;
+    font-size: 4vh;
+    font-size: clamp(1rem, 4vh, 1.6rem);
+    color: #ffffff;
     font-family: 'Font';
-    align-self: center;
-    margin-left: 2.5rem;
-    margin-bottom: 0.5rem;
+    bottom: 33%;
 }
 
-#time {
-    align-self: center;
+.superpose{
+    position: relative;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding-top: 1rem;
+    align-items: center;
 }
 
 #heure {
+    display: flex;
+    align-items: center;
     position: relative;
 }
 
 #heure img {
-    max-height:auto;
-    width: 450px;
+    width: 300px;
 }
 
 #heure span {
     position: absolute;
     z-index: 2;
-    font-size: 5rem;
+    font-size: 3.5rem;
+    padding-top: 0.4rem;
     color: white;
     font-family: 'digital';
-}
-
-
-.superpose{
-    display: flex;
-    align-content: center;
-    padding-top: 1rem;
 }
 
 #footer {
@@ -439,8 +443,20 @@ dialog button {
     }
 
     #content {
-        display: grid;
-        height:100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #center{
+        height: fit-content;
+    }
+
+    .center{
+        margin: 0;
+    }
+
+    .img{
+        height: 40%;
     }
 
     .superpose:first-child {
@@ -478,6 +494,7 @@ dialog button {
     #temp{
         position: relative;
         align-self:flex-end;
+        border: 1px solid rgb(236, 240, 0);
     }
 
     #time{
@@ -485,8 +502,17 @@ dialog button {
     }
 
     .superpose{
-        display: grid;
+        display: flex;
+        flex-direction: row;
         justify-content: center;
+        border: 1px solid rgb(5, 179, 5);
+
+        position: relative;
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        padding-top: 1rem;
+        align-items: center;
     }
 
     #centerFooter{
