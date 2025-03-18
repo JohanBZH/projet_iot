@@ -13,10 +13,6 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
-// require_once "vendor/phpmailer/Exception.php";
-// require_once "vendor/phpmailer/PHPmailer.php";
-// require_once "vendor/phpmailer/SMTP.php";
-
 function insertData($time_val, $temperature_val, $humidity_val, $db){
     if ($temperature !== null && $humidity !== null && is_numeric($temperature) && is_numeric($humidity)) {
         $floatTemperature = (float)$temperature;
@@ -104,12 +100,12 @@ function insertInTable($DataToInsert){
 
 // -------------------------------------------------------------------------
 
-//Get the data displayed in data.php
+//Select the action for the data export (download or send through mail).
+
 if ($_SERVER["REQUEST_METHOD"] == "POST"
     && isset($_POST['export'])){
 
         $data = $_SESSION['data_to_export'] ?? [];
-        // exportData($data);
         downloadData($data);
         header("Location: ../Frontend/data.php");
 }
@@ -117,19 +113,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"
     && isset($_POST['exportMail'])){
         $data = $_SESSION['data_to_export'] ?? [];
         sendMail($data);
-        // header("Location: ../Frontend/data.php");
 }
 
 //Export the data displayed in data.php in a .csv file.
 function downloadData($data){
-    //Use tmp 
+    //Use tmp to avoid permission issues
     $exportDir = sys_get_temp_dir() . '/';
 
-    //Create the file
+    //Create and open the file
     $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
     $filepath = $exportDir . $filename;
-
-    //Complete the file
     $file = fopen($filepath, 'w');
 
     //check if file opens
@@ -137,6 +130,7 @@ function downloadData($data){
         die("Impossible de créer le fichier CSV. Vérifiez les permissions.");
     }
 
+    //Complete the file
     fputcsv($file, ['Time_stamp', 'Temperature_value', 'Humidity_value']);
 
     foreach ($data as $row) {
@@ -161,16 +155,15 @@ function downloadData($data){
     exit;
 }
 
+//Send the data through mail as a .csv file 
 function sendMail($data){
 
-    //Use tmp 
+    //Use tmp to avoid permission issues
     $exportDir = sys_get_temp_dir() . '/';
 
-    //Create the file
+    //Create and open the file
     $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
     $filepath = $exportDir . $filename;
-
-    //Complete the file
     $file = fopen($filepath, 'w');
 
     //check if file opens
@@ -178,6 +171,7 @@ function sendMail($data){
         die("Impossible de créer le fichier CSV. Vérifiez les permissions.");
     }
 
+    //Complete the file
     fputcsv($file, ['Time_stamp', 'Temperature_value', 'Humidity_value']);
 
     foreach ($data as $row) {
@@ -190,45 +184,38 @@ function sendMail($data){
 
     fclose($file);
 
+    //PHPMailer settings.
     $mail = new PHPMailer(true);
 
     try{
-        //Debug
+        //If needed to debug, use MailHog to simulate a SMTP server and intercept the mails and add :
         //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
 
-        //Configuration
-
-        //Simple Mail Tranfer Protocol
         $mail->isSMTP();
         $mail->Host = 'smtp-jomayo.alwaysdata.net'; //For our host on alwaysdata, use "smtp-jomayo.alwaysdata.net" //for local testing : 'localhost'
-        $mail->Port = 465; //Ou 587 //To test on MailHog 1025
+        $mail->Port = 465; //or 587 //To test locally on MailHog 1025
         
-        //Dans le cas d'une connexion via MailHog
+        //With MailHog
         //$mail->SMTPAuth = false;
 
         //Authentification to alwaysdata
         $mail->SMTPAuth = true;
         $mail->Username = 'jomayo@alwaysdata.net';
-        $mail->Password = 'jomayo29200!'; //check in always data that de password is set and complex enough
+        $mail->Password = 'jomayo29200!'; //check in always data that the password is set and complex enough
 
         if ($mail->Port == 465) {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         } else {
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Pour le port 587
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; //the second option is set for the port 587
         }
 
-        //Set waiting time at 10s
+        //Set waiting time at 10s to avoid getting stuck in the event of network problems
         $mail->Timeout = 10;
 
-        //charset
+        //Mails parameters
         $mail->Charset = "utf-8";
-        
-        //recipients
         $mail->addAddress($_SESSION['login']); //ajout d'autant d'adresses que nécessaire
-
-        //sender
         $mail->setFrom("no-reply@jomayo.fr");
-
         //content
         $mail->Subject = "Your weather datas";
         $mail->Body = "Thank you for your trust in JoMaYo weather observations.";
@@ -252,9 +239,6 @@ function getLastInsert($db){
     
     $query = "SELECT * FROM Data ORDER BY id_data DESC LIMIT 1";
     $last = $db->query($query);
-    return $last->fetchAll(); // Get data in an associative array
+    return $last->fetchAll();
 }
 ?>
-
-    
-   

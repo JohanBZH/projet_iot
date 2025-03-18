@@ -159,7 +159,10 @@ password: Jomayo29200BREST
 
 ## Mail client
 
-We chose to use the SMTP provided with the host and use PHPMailer to manage mail.
+We chose to use the SMTP provided with the host and use PHPMailer to manage mail. If you are new to PHPMailer, please refer to [Nouvelle techno's Youtube channel](https://www.youtube.com/watch?v=SXKzTjxXW88&t=911s). Otherwise, you can refer to [PHPMailer GitHub](https://github.com/PHPMailer/PHPMailer).
+
+In short, to install PHPMailer run the following command in your folder : 
+```composer require phpmailer/phpmailer```
 
 ### Connexion to SMTP
 
