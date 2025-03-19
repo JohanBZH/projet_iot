@@ -19,7 +19,9 @@ include '../Backend/functions.php';
         <div id="center">
             <div id="content">
                 <div class="superpose">
-                    <img class="img"src="img/thermoBlanc.png">
+                    <div class="imgCenter">
+                        <img class="img"src="img/thermoBlanc.png">
+                    </div>
                     <span id="temp">
                         <?php 
                             $lastGet = getLastInsert($db);
@@ -28,7 +30,9 @@ include '../Backend/functions.php';
                     </span>
                 </div>
                 <div class="superpose">
-                    <img class="img" src="img/goutte.png">
+                    <div class="imgCenter">
+                        <img class="img" src="img/goutte.png">
+                    </div>
                     <span id="hum">
                     <?php 
                             $lastGet = getLastInsert($db);
