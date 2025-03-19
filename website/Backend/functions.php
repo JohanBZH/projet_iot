@@ -8,6 +8,8 @@ if (!isset($_SESSION['loggedIn'])) {
 
 include '../Backend/db_conn.php';
 
+insertData($time_stamp, $temperature, $humidity, $db);
+
 //php mailer
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -82,6 +84,8 @@ function calculateSlidingAverage($data, &$averageTable) {
 
 function insertInTable($DataToInsert){
 
+    // Insert data into data.php 
+
     if (!empty($DataToInsert)) {
         echo "<table>
                 <tr>
@@ -155,7 +159,7 @@ function downloadData($data){
     header('Pragma: no-cache');
     readfile($filepath);
 
-    // //Delete the temporary file
+    // Delete the temporary file
     unlink($filepath);
 
     exit;
@@ -250,6 +254,8 @@ function sendMail($data){
 
 function getLastInsert($db){
     
+    // Selecting the last intertion in the database for "real time" display
+
     $query = "SELECT * FROM Data ORDER BY id_data DESC LIMIT 1";
     $last = $db->query($query);
     return $last->fetchAll(); // Get data in an associative array

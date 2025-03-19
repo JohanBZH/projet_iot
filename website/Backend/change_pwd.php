@@ -10,6 +10,7 @@
     $stmt->execute();
 
     // checks password is not null
+
     if (empty($_POST['lastPwd']) || empty($_POST['newPwd']) || empty($_POST['newPwd2'])){ 
         $msg = "Don't forget the passwords.";
         header("Location: ../Frontend/error.php?msg=".$msg);
@@ -30,13 +31,15 @@
         }
     }
 
-    echo "test";
+    // checks both passwords are the same
 
-    if ($newPwd1 !== $newPwd2) { // checks both passwords are the same
+    if ($newPwd1 !== $newPwd2) { 
         $msg = "Passwords don't match.";
         header("Location: ../Frontend/error.php?msg=".$msg); 
         exit();
     } 
+    
+    // Updating the password
     
     $newPassword = password_hash($newPwd1, PASSWORD_DEFAULT);
     $stmt = $db->prepare("UPDATE App_user SET Password = :pwd WHERE Login = :llogin");

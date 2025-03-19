@@ -14,7 +14,7 @@ LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 // unsigned long previousMillis = 0;  // Compteur pour la gestion du temps
 // const long interval = 1000;        // Intervalle de 1 seconde (1000 ms)
 
-const String site = "https://jomayo.alwaysdata.net/Frontend/data.php";
+const String site = "https://jomayo.alwaysdata.net/Backend/db_conn.php";
 
 // Define NTP Client to get time
 WiFiUDP ntpUDP;
@@ -93,6 +93,7 @@ void loop() {
 
   if (httpResponseCode > 0) {
     String payload = http.getString();
+    Serial.println(url);
     Serial.println("Réponse du serveur: ");
     Serial.println(payload);
   } else {

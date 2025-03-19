@@ -68,10 +68,10 @@ $msg = "";
 
 // connecting to your account allows you access to the graph and data table
     if ($msg == "") {
-        // header("Location: ../Frontend/data.php?email=".$email . "&msg=".$msg); 
-        echo "ça marche";
-        echo $stmt;
-        echo $email;
+        session_start();
+        $_SESSION['loggedIn'] = true;
+        $_SESSION['login'] = $mail;
+        header("Location: ../Frontend/data.php?email=".$_SESSION['login'] . "&msg=".$msg); 
         exit();
     }
 
