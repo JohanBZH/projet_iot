@@ -371,10 +371,6 @@ dialog input {
     margin: 0.5rem auto;
 }
 
-dialog input:hover {
-    font-weight: bold;
-}
-
 dialog button {
     color: black;
     border: none;
@@ -581,6 +577,7 @@ dialog h4 {
 
     #time{
         align-self: center;
+        user-select: none;
     }
 
     .superpose{

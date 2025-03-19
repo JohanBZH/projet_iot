@@ -7,7 +7,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'refresh') {
     exit;
 }
 
-//Get the last data, ship it in a JSON file
+// Get the last data, ship it in a JSON file
 function refresh($db){
     $lastGet = getLastInsert($db);
 
@@ -17,9 +17,9 @@ function refresh($db){
         'time' => $lastGet[0]['Time_stamp'] 
     ];
 
-    //Define the header so the browser knows it's JSON content
+    // Define the header so the browser knows it's JSON content
     header('Content-Type: application/json');
-    //Encode the array in JSON format, echo 
+    // Encode the array in JSON format, echo 
     echo json_encode($refreshedData);
 }
 

@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 console.log('Données reçues:', data);
                 document.getElementById('temp').textContent = data.temperature + "°C";
                 document.getElementById('hum').textContent = data.humidity + "%";
-                document.getElementById('time').textContent = data.time.substr(11, 8);
+                document.getElementById('time').textContent = data.time.substr(11, 5);
 
                 window.scrollTo(0, scrollPos);
             })
