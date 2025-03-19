@@ -15,7 +15,7 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
-function insertData($time_val, $temperature_val, $humidity_val, $db){
+function insertData($time_stamp, $temperature, $humidity, $db){
     if ($temperature !== null && $humidity !== null && is_numeric($temperature) && is_numeric($humidity)) {
         $floatTemperature = (float)$temperature;
         $floatHumidity = (float)$humidity;

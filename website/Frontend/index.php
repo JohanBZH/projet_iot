@@ -24,7 +24,6 @@ include '../Backend/functions.php';
                     </div>
                     <span id="temp">
                         <?php 
-                            $lastGet = getLastInsert($db);
                             echo $lastGet[0]['Temperature_value'], "°C";
                         ?>
                     </span>
@@ -35,7 +34,6 @@ include '../Backend/functions.php';
                     </div>
                     <span id="hum">
                     <?php 
-                            $lastGet = getLastInsert($db);
                             echo $lastGet[0]['Humidity_value'],"%";
                         ?>
                     </span>
@@ -49,7 +47,6 @@ include '../Backend/functions.php';
             <img class="img" src="img/reveil.png">
             <span id="time">
                 <?php 
-                    $lastGet = getLastInsert($db);
                     $time = substr($lastGet[0]['Time_stamp'],11, -3);
                     echo $time;
                 ?>
