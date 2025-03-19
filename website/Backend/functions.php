@@ -1,5 +1,5 @@
 <?php
-//Start a session to send data through different files (here data to functions)
+// Start a session to send data through different files (here data to functions)
 session_start();
 
 if (!isset($_SESSION['loggedIn'])) {
@@ -39,7 +39,7 @@ function queryAllData($db){
 
 // -----------------------------------------------------
 
-// Calculate the average data by batch of 5 rows, with a shift of 1 rows, to smoothen the measures
+// Calculate the average data by batch of 5 rows, with a shift of 1 row every time to smoothen the measures
 function calculateSlidingAverage($data, &$averageTable) {
     $averageSize=5;
     $dataLength = count($data);
@@ -47,28 +47,28 @@ function calculateSlidingAverage($data, &$averageTable) {
     // Check for data availability
     if ($dataLength >= $averageSize) {
         
-    for($i = 0; $i <= ($dataLength-$averageSize); $i++){
+        for($i = 0; $i <= ($dataLength-$averageSize); $i++){
 
-        // Get the last five datas
-        $lastFiveData = array_slice($data, $i, $averageSize);
+            // Get the last five rows of data
+            $lastFiveData = array_slice($data, $i, $averageSize);
 
-        // Calculate average
-        $temperatureColumn = array_column($lastFiveData, 'Temperature_value');
-        $temperatureAverage = round(array_sum($temperatureColumn) / $averageSize, 2);
+            // Calculate average
+            $temperatureColumn = array_column($lastFiveData, 'Temperature_value');
+            $temperatureAverage = round(array_sum($temperatureColumn) / $averageSize, 2);
 
-        $humidityColumn = array_column($lastFiveData, 'Humidity_value');
-        $humidityAverage = round(array_sum($humidityColumn) / $averageSize, 2);
+            $humidityColumn = array_column($lastFiveData, 'Humidity_value');
+            $humidityAverage = round(array_sum($humidityColumn) / $averageSize, 2);
 
-        // Get unique timestamp for each 5 datas
-        $lastTimestamp = $lastFiveData[0]['Time_stamp'];
+            // Get unique timestamp for each batch
+            $lastTimestamp = $lastFiveData[0]['Time_stamp'];
 
-        // Add datas to an array
-        $averageTable[] = [
-            'time' => $lastTimestamp,
-            'temperature' => $temperatureAverage,
-            'humidite' => $humidityAverage
-        ];
-        }    
+            // Add data to an array
+            $averageTable[] = [
+                'time' => $lastTimestamp,
+                'temperature' => $temperatureAverage,
+                'humidite' => $humidityAverage
+            ];
+            }    
 
         // Print table
         
@@ -78,6 +78,7 @@ function calculateSlidingAverage($data, &$averageTable) {
     return false;
 }
 
+// Display the data in HTML if it is available
 function insertInTable($DataToInsert){
 
     // Insert data into data.php 
@@ -104,7 +105,7 @@ function insertInTable($DataToInsert){
 
 // -------------------------------------------------------------------------
 
-//Select the action for the data export (download or send through mail).
+// Select the action for the data export (download or send through mail).
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"
     && isset($_POST['export'])){
@@ -119,22 +120,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"
         sendMail($data);
 }
 
-//Export the data displayed in data.php in a .csv file.
+// Export the data displayed in data.php in a .csv file.
 function downloadData($data){
-    //Use tmp to avoid permission issues
+    // Use tmp to avoid permission issues
     $exportDir = sys_get_temp_dir() . '/';
 
-    //Create and open the file
+    // Create and open the file
     $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
     $filepath = $exportDir . $filename;
     $file = fopen($filepath, 'w');
 
-    //check if file opens
+    // Check if file opens
     if ($file === false) {
         die("Impossible de créer le fichier CSV. Vérifiez les permissions.");
     }
 
-    //Complete the file
+    // Complete the file
     fputcsv($file, ['Time_stamp', 'Temperature_value', 'Humidity_value']);
 
     foreach ($data as $row) {
@@ -147,35 +148,36 @@ function downloadData($data){
 
     fclose($file);
 
-    //Force the download
+    // Force the download
     header('Content-Type: application/csv');
     header('Content-Disposition: attachment; filename="' . $filename . '"');
     header('Pragma: no-cache');
     readfile($filepath);
 
     // Delete the temporary file
+    // Delete the temporary file
     unlink($filepath);
 
     exit;
 }
 
-//Send the data through mail as a .csv file 
+// Send the data through mail as a .csv file 
 function sendMail($data){
 
-    //Use tmp to avoid permission issues
+    // Use tmp to avoid permission issues
     $exportDir = sys_get_temp_dir() . '/';
 
-    //Create and open the file
+    // Create and open the file
     $filename = 'Weather_data_' . date('Y-m-d') . '.csv';
     $filepath = $exportDir . $filename;
     $file = fopen($filepath, 'w');
 
-    //check if file opens
+    // Check if file opens
     if ($file === false) {
         die("Impossible de créer le fichier CSV. Vérifiez les permissions.");
     }
 
-    //Complete the file
+    // Complete the file
     fputcsv($file, ['Time_stamp', 'Temperature_value', 'Humidity_value']);
 
     foreach ($data as $row) {
@@ -188,46 +190,46 @@ function sendMail($data){
 
     fclose($file);
 
-    //PHPMailer settings.
+    // PHPMailer settings.
     $mail = new PHPMailer(true);
 
     try{
-        //If needed to debug, use MailHog to simulate a SMTP server and intercept the mails and add :
-        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        // If needed to debug, use MailHog to simulate a SMTP server and intercept the mails and add :
+        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
 
         $mail->isSMTP();
-        $mail->Host = 'smtp-jomayo.alwaysdata.net'; //For our host on alwaysdata, use "smtp-jomayo.alwaysdata.net" //for local testing : 'localhost'
-        $mail->Port = 465; //or 587 //To test locally on MailHog 1025
+        $mail->Host = 'smtp-jomayo.alwaysdata.net'; // For our host on alwaysdata, use "smtp-jomayo.alwaysdata.net" // for local testing : 'localhost'
+        $mail->Port = 465; // or 587 // To test locally on MailHog 1025
         
-        //With MailHog
-        //$mail->SMTPAuth = false;
+        // With MailHog
+        // $mail->SMTPAuth = false;
 
-        //Authentification to alwaysdata
+        // Authentification to alwaysdata
         $mail->SMTPAuth = true;
         $mail->Username = 'jomayo@alwaysdata.net';
-        $mail->Password = 'jomayo29200!'; //check in always data that the password is set and complex enough
+        $mail->Password = 'jomayo29200!'; // check in always data that the password is set and complex enough
 
         if ($mail->Port == 465) {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         } else {
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; //the second option is set for the port 587
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // the second option is set for the port 587
         }
 
-        //Set waiting time at 10s to avoid getting stuck in the event of network problems
+        // Set waiting time at 10s to avoid getting stuck in the event of network problems
         $mail->Timeout = 10;
 
-        //Mails parameters
+        // Mails parameters
         $mail->Charset = "utf-8";
-        $mail->addAddress($_SESSION['login']); //ajout d'autant d'adresses que nécessaire
+        $mail->addAddress($_SESSION['login']); // ajout d'autant d'adresses que nécessaire
         $mail->setFrom("no-reply@jomayo.fr");
-        //content
+        // content
         $mail->Subject = "Your weather datas";
         $mail->Body = "Thank you for your trust in JoMaYo weather observations.";
 
-        //Attachment
+        // Attachment
         $mail->addAttachment($filepath, $filename);
 
-        //send - wait and redirect
+        // send - wait and redirect
         $mail->send();
         echo "Message envoyé <br>";
         echo '<a href="../Frontend/data.php">Retour à la station météo.</a>';

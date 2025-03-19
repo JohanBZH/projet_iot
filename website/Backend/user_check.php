@@ -6,9 +6,9 @@ include '../Backend/db_conn.php';
 
 $msg = "";
 
-// checks email address
+// check email address
 
-// checks address is not null when sent
+// check address is not null when sent
     if ($_SERVER["REQUEST_METHOD"] != "POST"){ 
         $msg = "Error.";
         header("Location: ../Frontend/error.php?msg=".$msg); 
@@ -24,7 +24,7 @@ $msg = "";
     $email_ToFilter = $_POST['email'];
     $email = filter_var($email_ToFilter, FILTER_VALIDATE_EMAIL);
 
-// checks if email address is valid
+// check if email address is valid
     if($email == false) { 
         $msg = "Invalid email address.";
         header("Location: ../Frontend/error.php?msg=".$msg); 
@@ -33,14 +33,14 @@ $msg = "";
 
     $password = $_POST['password'];
 
-// checks password is not null
+// check password is not null
     if (empty($_POST['password'])){ 
         $msg = "Don't forget the password.";
         header("Location: ../Frontend/error.php?msg=".$msg); 
         exit();
     }
 
-// checks the table for an existing identical email address
+// check the table for an existing identical email address
     $stmt = $db->prepare("SELECT * FROM App_user WHERE Login = :llogin");
     $stmt->bindParam(':llogin',$email);
     $stmt->execute();
