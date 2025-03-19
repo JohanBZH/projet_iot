@@ -9,6 +9,7 @@ if (!isset($_SESSION['loggedIn'])) {
 include '../Backend/db_conn.php';
 
 insertData($time_stamp, $temperature, $humidity, $db);
+$lastGet = getLastInsert($db);
 
 //php mailer
 use PHPMailer\PHPMailer\Exception;
