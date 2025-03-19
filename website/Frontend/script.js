@@ -1,7 +1,5 @@
 // create constants for every sign in and sign up modal elements
 
-// create constants for every sign in and sign up modal elements
-
 const signInButton = document.getElementById("signInButton").addEventListener('click', openSignInModal);
 const signUpButton = document.getElementById("signUpButton").addEventListener('click', openSignUpModal);
 
@@ -11,8 +9,7 @@ const signUpclose = document.getElementById("signUpclose").addEventListener('cli
 const signInDialog = document.getElementById("signInDialog");
 const signUpDialog = document.getElementById("signUpDialog");
 
-// opens and closes modals using the dialog HTML element
-// opens and closes modals using the dialog HTML element
+// open and close modals using the dialog HTML element
 function openSignInModal() {
     signInDialog.showModal();
     console.log("clicked on Sign in");
