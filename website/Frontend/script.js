@@ -29,20 +29,3 @@ function closeSignUpModal() {
     signUpDialog.close();
     console.log("closed the modal");
 };
-
-// thermometer animation (requires fabric.js)
-const rect1 = new fabric.Rect({
-    left: 100,
-    top: 100,
-    fill: 'red',
-    width: 20,
-    height: 20
-});
-
-rect1.animate(
-    'left',
-    '+=100',
-    {
-        onChange: canvas.renderAll(canvas)
-    }
-);

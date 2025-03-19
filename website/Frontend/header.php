@@ -31,28 +31,40 @@
         <div id="signUpclose">
             <button aria-label="close" formnovalidate>X</button>
         </div>
-            
+        <h3>Entrez vos identifiants</h3>
             <form action="../Backend/create_user.php" method="POST">
-                <input type="email" name="email" placeholder="jomayo@winners.fr">
-                <div id="wrongmail"></div>
-                <input type="password" name="password" placeholder="Mot de passe hyper compliqué">
-                <input type="password" name="passwordcheck" placeholder="Confirmez le mot de passe">
-                <button type="submit" id="signup">Créer mon compte</button>
+                <div id="loginCredentials">
+                    <h4>E-mail</h4>
+                    <input type="email" name="email" placeholder="jomayo@winners.fr">            
+                    <h4>Mot de passe</h4>
+                    <input type="password" name="password" placeholder="Mot de passe hyper compliqué">
+                    <h4>Confirmer le mot de passe</h4>
+                    <input type="password" name="passwordcheck" placeholder="Confirmez le mot de passe">
+                </div>
+                <div id="submitBtn">
+                    <button type="submit" id="signup">Créer mon compte</button>
+                </div>
             </form>
            
         </div>
         </dialog>
-
+        
         <dialog id="signInDialog">
         <div class="signInOrUpform">
         <div id="signInclose">
             <button aria-label="close" formnovalidate>X</button>
         </div>
+        <h3>Entrez vos identifiants</h3>
             <form action="../Backend/user_check.php" method="POST">
-                <input type="email" name="email" id="email" placeholder="jomayo@winners.fr">
-                <div id="wrongmail"></div>
-                <input type="password" name="password" placeholder="Mot de passe hyper compliqué">
-                <button type="submit" id="signin">Se connecter</button>
+                <div id="loginCredentials">
+                    <h4>E-mail</h4>
+                    <input type="email" name="email" id="email" placeholder="jomayo@winners.fr">
+                    <h4>Mot de passe</h4>
+                    <input type="password" name="password" placeholder="Mot de passe hyper compliqué">
+                </div>
+                <div id="submitBtn">
+                    <button type="submit" id="signin">Se connecter</button>
+                </div>
             </form>
             
         </div>

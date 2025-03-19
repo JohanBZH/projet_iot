@@ -35,7 +35,7 @@ include '../Backend/functions.php';
             </div>
         </div>
         <!-- Data export -->
-        <div class="center">
+        <div class="center" id="exportLinks">
             <form action="../Backend/functions.php" method="POST">
                 <input type="submit" id="exportBtn" name="export" value="Télécharger les données">
             </form>

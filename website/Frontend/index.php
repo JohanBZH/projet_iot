@@ -20,7 +20,7 @@ include '../Backend/functions.php';
             <div id="content">
                 <div class="superpose">
                     <div class="imgCenter">
-                        <img class="img"src="img/thermoBlanc.png">
+                        <img class="img" src="img/thermoBlanc.png">
                     </div>
                     <span id="temp">
                         <?php 
@@ -61,6 +61,5 @@ include '../Backend/functions.php';
     </div>
     <?php include 'footer.php' ?>
     <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fabric@latest/dist/index.min.js"></script>
 </body>
 </html>

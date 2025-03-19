@@ -82,8 +82,8 @@ function insertInTable($DataToInsert){
     if (!empty($DataToInsert)) {
         echo "<table>
                 <tr>
-                    <th class='stickyHeader'>Time</th>
-                    <th class='stickyHeader'>Temperature (°C)</th>
+                    <th class='stickyHeader'>Date et heure</th>
+                    <th class='stickyHeader'>Température (°C)</th>
                     <th class='stickyHeader'>Humidité (%)</th>
                 </tr>";
         

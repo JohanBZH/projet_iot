@@ -35,13 +35,16 @@ body {
 }
 
 #exportBtn  {
-    gap: 4vw;
+    padding: 2vh 4vw;
 }
 
 #signUpButton:hover, #signInButton:hover, #exportBtn:hover {
     transform: scale(1.1);
 }
 
+button:hover {
+    cursor: pointer;
+}
 
 #left {
     display: flex;
@@ -181,6 +184,10 @@ h1, h2, h3, a {
     bottom: 13%;
 }
 
+#tempChange {
+    position: absolute;
+}
+
 #hum {
     position: absolute;
     z-index: 3;
@@ -197,6 +204,7 @@ h1, h2, h3, a {
     justify-content: center;
     padding-top: 1rem;
     align-items: center;
+    user-select: none;
 }
 
 #heure {
@@ -276,7 +284,7 @@ table {
     border-radius: 25% 10%;
     border: solid 1px black;
     border-collapse: collapse;
-    
+
 }
 
 th {
@@ -285,7 +293,8 @@ th {
 }
 th, td {
     border: 1px solid;
-    
+    padding: 0.5rem;
+    text-align: center;
 }
 
 th.stickyHeader {
@@ -293,6 +302,7 @@ th.stickyHeader {
     top: 0;
     background-color: rgb(172, 2, 73);
     z-index: 1;
+
 }
 
 td {
@@ -308,6 +318,7 @@ td {
     border: solid black 1px;
     background-color: rgb(230, 230, 230);
     width: 50rem;
+    margin-bottom: 2rem;
 }
 
 #profilContent {
@@ -332,41 +343,88 @@ td {
 
 #signInclose, #signUpclose {
     position: absolute;
-    top: 1%;
-    left: 90%;
+    top: 5%;
+    left: 92%;
     z-index: 999;
 }
 
 dialog {
-    padding-top: 5%;
     position: relative;
     width: 30vw;
     border: solid 1px black;
     box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 1rem;
+    justify-content: center;
+}
+
+#loginCredentials {
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
 }
 
 dialog input {
-    margin: 5%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     width: 80%;
+    padding: 0.2rem;
+    margin: 0.5rem auto;
+}
+
+dialog input:hover {
+    font-weight: bold;
 }
 
 dialog button {
-    margin: 1rem auto;
     color: black;
     border: none;
     display: flex;
+    background-color: transparent;
     justify-content: center;
+    margin: 0;
+}
+
+dialog button:hover {
+    background-color: rgb(126, 202, 238);
+    color: #ffffff;
+    border-radius: 50%;
+}
+
+dialog h3 {
+    display: flex;
+    justify-content: center;
+    color: #0F0F0F;
+    margin-bottom: 1rem;;
+}
+
+dialog h4 {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+}
+
+#signup, #signin {
+    background-color: rgb(126, 202, 238);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+
+}
+
+#submitBtn {
+    margin: 1rem auto 1.2rem;
+    display: flex;
+    justify-content: center;
+    padding: 0;
 }
 
 ::backdrop {
     background-image: linear-gradient(
       45deg,
-      rgb(25, 219, 219),
-      rgb(0, 206, 233),
-      rgb(56, 153, 250),
-      rgb(0, 138, 230)
+      rgb(97, 151, 196),
+      rgb(86, 169, 207),
+      rgb(78, 137, 197),
+      rgb(68, 152, 207)
     );
     opacity: 0.75;
   }
@@ -438,6 +496,11 @@ dialog button {
         grid-row-start: 3;
         grid-row-end: 3;
         margin-left: 1rem;
+    }
+
+    dialog {
+        position: relative;
+        width: 80vw;
     }
 
     .justify{
