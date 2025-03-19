@@ -26,8 +26,8 @@ String dayStamp;
 String timeStamp;
 
 
-const char* ssid = "iPhone (9)";    // Remplace par ton SSID
-const char* password = "aaaaaaaa";  // Remplace par ton mot de passe
+const char* ssid = "FD-91";    // Remplace par ton SSID iPhone (9)
+const char* password = "Not found";  // Remplace par ton mot de passe aaaaaaaa
 
 void setup() {
 
