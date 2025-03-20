@@ -1,5 +1,4 @@
 // create constants for every sign in and sign up modal elements
-
 const signInButton = document.getElementById("signInButton").addEventListener('click', openSignInModal);
 const signUpButton = document.getElementById("signUpButton").addEventListener('click', openSignUpModal);
 

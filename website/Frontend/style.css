@@ -612,8 +612,36 @@ dialog h4 {
         color: white;
     }
 
+    td {
+        padding:0;
+    }
+
     #graph {
         width: 20rem;
+    }
+
+    #profilContent {
+        width: 80vw;
+        margin: 2rem auto;
+    }
+
+    #profilContent h2 {
+        align-self: center;
+    }
+
+    #changePwd {
+        margin-top: 4rem;
+    }
+
+    #formPwd input{
+        width: 90%;
+    }
+    
+    #formPwd button{
+        align-self: center;
+        margin-top: 1rem;
+        width: 6em;
+        height: auto;
     }
 }
 
