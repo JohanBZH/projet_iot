@@ -70,7 +70,7 @@ $msg = "";
     if ($msg == "") {
         session_start();
         $_SESSION['loggedIn'] = true;
-        $_SESSION['login'] = $mail;
+        $_SESSION['login'] = $email;
         header("Location: ../Frontend/data.php?email=".$_SESSION['login'] . "&msg=".$msg); 
         exit();
     }

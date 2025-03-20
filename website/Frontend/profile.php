@@ -27,6 +27,13 @@ include '../Backend/functions.php';
                         <button type="submit" id="signup">Change</button>
                     </form>
                 </div>
+                <div id="delAcc">
+                    <h2>Supprimer votre compte :</h2>
+                    <form id="formDel" action="../Backend/delete_account.php" method="POST">
+                        <input type="text" name="confirm" placeholder="Veuillez écrire confirmer">
+                        <button type="submit" id="btnDel">Supprimer</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

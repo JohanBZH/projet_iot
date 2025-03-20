@@ -4,6 +4,7 @@ session_start();
 
 if (!isset($_SESSION['loggedIn'])) {
     $_SESSION['loggedIn'] = false;
+    $_SESSION['login'] = "";
 }
 
 include '../Backend/db_conn.php';
