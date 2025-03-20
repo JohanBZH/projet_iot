@@ -24,7 +24,7 @@ include '../Backend/functions.php';
                         <input type="password" name="lastPwd" placeholder="Votre ancien mot de passe">
                         <input type="password" name="newPwd" placeholder="Nouveau mot de passe">
                         <input type="password" name="newPwd2" placeholder="Retapez le nouveau mot de passe">
-                        <button type="submit" id="signup">Change</button>
+                        <button type="submit">Change</button>
                     </form>
                 </div>
                 <div id="delAcc">

@@ -1,5 +1,4 @@
 // create constants for every sign in and sign up modal elements
-
 const signInButton = document.getElementById("signInButton").addEventListener('click', openSignInModal);
 const signUpButton = document.getElementById("signUpButton").addEventListener('click', openSignUpModal);
 
@@ -30,19 +29,35 @@ function closeSignUpModal() {
     console.log("closed the modal");
 };
 
-// thermometer animation (requires fabric.js)
-const rect1 = new fabric.Rect({
-    left: 100,
-    top: 100,
-    fill: 'red',
-    width: 20,
-    height: 20
-});
+//Refresh the data displayed in the landing page every 2 seconds. 
 
-rect1.animate(
-    'left',
-    '+=100',
-    {
-        onChange: canvas.renderAll(canvas)
+document.addEventListener('DOMContentLoaded', function(){
+
+    function refreshJS(){
+        const scrollPos = window.scrollY;
+        
+        //fetch a json containing the lastest data to display and change the content of the associated div
+        fetch('../Backend/refresh.php?action=refresh')
+            .then(response => {
+                if(!response.ok){
+                    throw new Error ('Network error');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Données reçues:', data);
+                document.getElementById('temp').textContent = data.temperature + "°C";
+                document.getElementById('hum').textContent = data.humidity + "%";
+                document.getElementById('time').textContent = data.time.substr(11, 5);
+
+                window.scrollTo(0, scrollPos);
+            })
+            .catch(error => {
+                console.error('Error', error);
+            })
     }
-);
+
+    refreshJS();
+    
+    setInterval(refreshJS, 2000);
+});

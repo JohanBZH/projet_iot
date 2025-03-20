@@ -2,7 +2,7 @@
 // Connect to the .env to get the login credentials that is stored on your localhost
 include '../Backend/vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable('/home/jomayo/www/Frontend'); //pour always data /home/jomayo/www/Frontend
+$dotenv = Dotenv\Dotenv::createImmutable('/var/www/html/projet_iot/website/Frontend'); //pour always data /home/jomayo/www/Frontend
 $dotenv->load();
 
 $deb = 0;
