@@ -26,12 +26,12 @@ DROP TABLE IF EXISTS `App_user`;
 CREATE TABLE `App_user` (
   `id_user` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
   `Login` varchar(50) NOT NULL,
-  `Password` varchar(50) NOT NULL,
+  `Password` varchar(200) NOT NULL,
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `Login` (`Login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+-- CAREFUL not to set the password limit under 200 or the login function will not work
 --
 -- Dumping data for table `App_user`
 --

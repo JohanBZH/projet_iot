@@ -1,6 +1,6 @@
 <?php 
 
-    // End of the session and reset to NULL the var
+    // End the session and reset to NULL the var
 
     session_start();
     session_unset();

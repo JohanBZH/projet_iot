@@ -5,8 +5,6 @@ include '../Backend/vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable('/var/www/html/projet_iot/website/Frontend'); //pour always data /home/jomayo/www/Frontend
 $dotenv->load();
 
-$deb = 0;
-
 // Get the data from the ESP32 through GET
 $temperature = isset($_GET['temperature']) ? $_GET['temperature'] : null;
 $humidity = isset($_GET['humidity']) ? $_GET['humidity'] : null;

@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function(){
     function refreshJS(){
         const scrollPos = window.scrollY;
         
-        //fetch a json containing the lastest data to display and change the content of the associated div
+        //fetch a json containing the latest data to display and change the content of the associated div
         fetch('../Backend/refresh.php?action=refresh')
             .then(response => {
                 if(!response.ok){

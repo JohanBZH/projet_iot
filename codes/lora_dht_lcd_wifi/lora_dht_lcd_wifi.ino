@@ -11,9 +11,6 @@
 DHT dht(brocheDeBranchementDHT, typeDeDHT);
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 
-// unsigned long previousMillis = 0;  // Compteur pour la gestion du temps
-// const long interval = 1000;        // Intervalle de 1 seconde (1000 ms)
-
 const String site = "https://jomayo.alwaysdata.net/Frontend/index.php";
 
 // Define NTP Client to get time
@@ -26,8 +23,8 @@ String dayStamp;
 String timeStamp;
 
 
-const char* ssid = "FD-91";    // Remplace par ton SSID iPhone (9)
-const char* password = "Not found";  // Remplace par ton mot de passe aaaaaaaa
+const char* ssid = "FD-91";    // Replace by SSID iPhone (9)
+const char* password = "Not found";  // Replace by password aaaaaaaa
 
 void setup() {
 
@@ -101,7 +98,7 @@ void loop() {
     Serial.println(httpResponseCode);
   }
 
-  http.end();  // Libérer la ressource
+  http.end();  // Free the ressource
 
   timeClient.forceUpdate();
 

@@ -2,6 +2,7 @@
     <div id="header">
         <div id="left">
             <?php 
+            // If the user is connected, these links appear
             if ($_SESSION['loggedIn'] == true) {
                 echo '<a href="profile.php" id="profil">Profil</a>
             <a href="data.php" id="hist">Historique</a>';
@@ -14,11 +15,13 @@
         </div>
 
         <?php 
+        // If the user is connected, this link appears
             if ($_SESSION['loggedIn'] == true) {
                 echo '
                 <a href="logout.php" id="logged">Déconnexion
                 </a>';
             } else {
+        // If the user is not connected, these links appear instead
                 echo '<div id="notLogged">
                 <button id="signInButton">Connexion</button>
                 <button id="signUpButton">Inscription</button>

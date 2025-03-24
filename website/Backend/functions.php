@@ -36,7 +36,7 @@ function insertData($time_stamp, $temperature, $humidity, $db){
 function queryAllData($db){
     $query = "SELECT Time_stamp, Temperature_value, Humidity_value FROM Data ORDER BY Time_stamp ASC";
     $result = $db->query($query);
-    return $result->fetchAll(); // Get data in an associative array
+    return $result->fetchAll();
 }
 
 // -----------------------------------------------------
@@ -122,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"
         sendMail($data);
 }
 
-// Export the data displayed in data.php in a .csv file.
+// Export the data displayed in the table from data.php in a .csv file.
 function downloadData($data){
     // Use tmp to avoid permission issues
     $exportDir = sys_get_temp_dir() . '/';
@@ -156,7 +156,6 @@ function downloadData($data){
     header('Pragma: no-cache');
     readfile($filepath);
 
-    // Delete the temporary file
     // Delete the temporary file
     unlink($filepath);
 
@@ -209,7 +208,7 @@ function sendMail($data){
         // Authentification to alwaysdata
         $mail->SMTPAuth = true;
         $mail->Username = 'jomayo@alwaysdata.net';
-        $mail->Password = 'jomayo29200!'; // check in always data that the password is set and complex enough
+        $mail->Password = 'jomayo29200!'; // check in alwaysdata that the password is set and complex enough
 
         if ($mail->Port == 465) {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
@@ -222,10 +221,10 @@ function sendMail($data){
 
         // Mails parameters
         $mail->Charset = "utf-8";
-        $mail->addAddress($_SESSION['login']); // ajout d'autant d'adresses que nécessaire
+        $mail->addAddress($_SESSION['login']); // add as many email addresses as necessary
         $mail->setFrom("no-reply@jomayo.fr");
         // content
-        $mail->Subject = "Your weather datas";
+        $mail->Subject = "Your weather data";
         $mail->Body = "Thank you for your trust in JoMaYo weather observations.";
 
         // Attachment

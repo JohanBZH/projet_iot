@@ -1,7 +1,7 @@
 <?php
 require_once '../Backend/db_conn.php';
 
-// Run the refresh action and exit so only the needed data is send
+// Run the refresh action and exit so only the needed data is sent
 if (isset($_GET['action']) && $_GET['action'] === 'refresh') {
     refresh($db);
     exit;

@@ -47,7 +47,9 @@ $msg = "";
 
     foreach ($stmt as $user) {
         if ($user["Password"] != null) {
-// /!\ password_verify will only work if you set set the max var char length to > 200
+// /!\ password_verify will only work if you set the max var char length to > 200 in your database
+
+// check the password in the database and allow access if they match
             if (password_verify($password, $user["Password"])){
                 $_SESSION['login'] = $user['Login'];
                 $_SESSION['loggedIn'] = true;
@@ -66,15 +68,3 @@ $msg = "";
     header("Location: ../Frontend/error.php?msg=".$msg);
     exit();
 
-// connecting to your account allows you access to the graph and data table
-    if ($msg == "") {
-        // // header("Location: ../Frontend/data.php?email=".$email . "&msg=".$msg); 
-        // echo "ça marche";
-        // echo $stmt;
-        // echo $email;
-        // exit();
-    }
-
-    if ($msg !== "") {
-        // header("Location: ../Frontend/error.php?msg=".$msg); 
-    }
